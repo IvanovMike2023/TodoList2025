@@ -1,0 +1,35 @@
+.AppContainer {
+}
+
+.HeadWrapper {
+    height: 60px;
+    background-color: #61dafb;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.Menu {
+    display: grid;
+    margin-left: 50px;
+}
+
+.Login {
+    display: grid;
+    justify-items: end;
+    margin-right: 50px;
+}
+
+.WrapperBody {
+    display: grid;
+    justify-items: center;
+    margin-top: 50px;
+}
+.ButtonAdd{
+    display: flex;
+}
+.Container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

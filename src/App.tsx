@@ -1,26 +1,39 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import logo from './logo.svg';
+import s from './app.module.css'
 import './App.css';
+import {Button, IconButton, TextField} from "@mui/material";
+import Icon from '@mui/material/Icon';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import {inspect} from "util";
+import {Todolist} from "./Components/Todolist";
+import {AddItem} from "./Components/AddItem";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const ref = useRef<HTMLInputElement | null>(null)
+
+    const handleClick = (e: React.MouseEvent): void => {
+        if (ref.current !== null) console.log(ref.current.value);
+    };
+    return (
+        <div className={s.AppContainer}>
+            <div className={s.HeadWrapper}>
+                <div className={s.Menu}>menu</div>
+                <div className={s.Login}>
+                    <div>
+                        <button>login</button>
+                    </div>
+                </div>
+            </div>
+            <div className={s.WrapperBody}>
+                <AddItem/>
+            </div>
+            <div className={s.Container}>
+                <Todolist title={'casac'}/>
+                <Todolist title={'111111'}/>
+            </div>
+        </div>
+    );
 }
 
 export default App;
