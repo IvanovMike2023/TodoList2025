@@ -7,10 +7,10 @@ import {Tasks} from "../App";
 type Props={
     title:string,
     deleteTask:()=>void
+    addTask:(title:string)=>void
     tasks:Tasks
 }
 export const Todolist=(props:Props)=>{
-
 
     return <>
         <Box
@@ -29,10 +29,10 @@ export const Todolist=(props:Props)=>{
                 <p>{props.title}</p>
                 <IconButton color="primary"><DeleteIcon color={'action'}/></IconButton>
                 </div>
-                    <AddItem/>
+                    <AddItem addTask={props.addTask}/>
                 <ul>
                 {props.tasks.map((el)=>{
-                   return <li> {el.title} <IconButton color="primary"><DeleteIcon onClick={props.deleteTask} color={'action'}/></IconButton></li>
+                   return <li key={el.id}> {el.title} <IconButton color="primary"><DeleteIcon onClick={props.deleteTask} color={'action'}/></IconButton></li>
                 })}
                 </ul>
             </Paper>
