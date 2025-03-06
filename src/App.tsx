@@ -4,34 +4,34 @@ import './App.css';
 import {Todolist} from "./Components/Todolist";
 import {AddItem} from "./Components/AddItem";
 import {v1} from "uuid";
-export type Tasks=Task[]
-type Task= {
+import {state, Task, Tasks} from './state'
+
+type FilterValues = 'all'| 'ative'
+export type Todolist = {
     id: string
     title: string
-    isdone:boolean
+    filter: FilterValues
 }
-
 function App() {
+
    const deleteTask=()=>{
        console.log('dddd')
    }
-    let tasksState:Tasks=[
-        {id:v1(),title:'xsax',isdone:true},
-        {id:v1(),title:'2222',isdone:true},
-        {id:v1(),title:'3333',isdone:true},
-        {id:v1(),title:'55555',isdone:true}
-    ]
-    const [tasks,setTasks]=useState(tasksState)
+
+    const [tasks,setTasks]=useState<Task[]>(state)
+    const [todolist,setTodoList]=useState<Todolist[]>([
+        {id:v1(),title: 'cass',filter: 'all'},
+        {id:v1(),title: 'cascasc',filter: 'all'},
+        {id:v1(),title: 'ccascsaccccc',filter: 'all'}
+    ])
 
     const addTask = (title:string)=>{
-        console.log(title)
        const newTask={id:v1(),title:title,isdone:true}
-        const newtasks=[...tasksState,newTask]
+        const newtasks=[...state,newTask]
          setTasks(newtasks)
-
     }
     useEffect(()=>{
-        console.log(tasksState)
+        console.log(state)
         console.log(tasks)
     },[tasks])
     return (
@@ -48,7 +48,10 @@ function App() {
                 <AddItem />
             </div>
             <div className={s.Container}>
-                <Todolist deleteTask={deleteTask} title={'casac'} tasks={tasks} addTask={addTask}/>
+                {todolist.map((el)=>{
+                  return  <Todolist key={el.id} deleteTask={deleteTask} title={el.title} tasks={tasks} addTask={addTask}/>
+
+                })}
             </div>
         </div>
     );

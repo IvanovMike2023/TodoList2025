@@ -3,7 +3,7 @@ import {Box, IconButton, Paper} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
 import s from './todolist.module.css'
-import {Tasks} from "../App";
+import {Tasks} from "../state";
 type Props={
     title:string,
     deleteTask:()=>void
