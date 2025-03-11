@@ -11,7 +11,7 @@ export type Todolist = {
     title: string
     filter: FilterValues
 }
- type Task = {
+ export type Task = {
     id: string
     title: string
     isdone: boolean
@@ -52,7 +52,12 @@ const todoListId2=v1()
         tasks[todolistId]=[...todolistTasks,newTask]
         setTasks({...tasks})
     }
-
+const addTodoList=(title: string)=>{
+    const newTodolist={id:v1(),title:title,filter:'all'}
+    //todolist=[todolist,newTodolist]
+    console.log(todolist)
+    console.log(title)
+}
     return (
         <div className={s.AppContainer}>
             <div className={s.HeadWrapper}>
@@ -64,7 +69,7 @@ const todoListId2=v1()
                 </div>
             </div>
             <div className={s.WrapperBody}>
-                <AddItem/>
+                <AddItem addTodoList={addTodoList}/>
             </div>
             <div className={s.Container}>
                 {todolist.map((el) => {
