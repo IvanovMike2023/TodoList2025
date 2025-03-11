@@ -4,11 +4,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
 import s from './todolist.module.css'
 import {Tasks} from "../state";
+import {TasksState} from "../App";
 type Props={
     title:string,
-    deleteTask:()=>void
-    addTask:(title:string)=>void
-    tasks:Tasks
+    todoListId:string,
+    deleteTask:(taskId:string,todolistId:string)=>void
+    addTask:(title:string,id:string)=>void
+    tasks:TasksState
 }
 export const Todolist=(props:Props)=>{
 
@@ -29,10 +31,10 @@ export const Todolist=(props:Props)=>{
                 <p>{props.title}</p>
                 <IconButton color="primary"><DeleteIcon color={'action'}/></IconButton>
                 </div>
-                    <AddItem addTask={props.addTask}/>
+                    <AddItem todolistId={props.todoListId} addTask={props.addTask}/>
                 <ul>
-                {props.tasks.map((el)=>{
-                   return <li key={el.id}> {el.title} <IconButton color="primary"><DeleteIcon onClick={props.deleteTask} color={'action'}/></IconButton></li>
+                {props.tasks[props.todoListId].map((el)=>{
+                   return <li key={el.id}> {el.title} <IconButton color="primary"><DeleteIcon onClick={()=>props.deleteTask(props.todoListId,el.id)} color={'action'}/></IconButton></li>
                 })}
                 </ul>
             </Paper>

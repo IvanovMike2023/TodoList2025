@@ -3,12 +3,13 @@ import {IconButton, TextField} from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import React, {ChangeEvent,KeyboardEvent, useState} from "react";
 type Props={
-    addTask?:(title:string)=>void
+    addTask?:(title:string,id:string)=>void,
+    todolistId?: string
 }
 export const AddItem = (props:Props) => {
     const [text,setText]=useState('')
     const addTitle=()=>{
-        props.addTask ?  props.addTask(text) : console.log('error')
+        props.addTask && props.todolistId ?  props.addTask(text,props.todolistId) : console.log('error')
     }
     const handleTextFieldChange=(e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         setText(e.target.value)
@@ -16,7 +17,7 @@ export const AddItem = (props:Props) => {
 
     const handleTextFieldCreate=(e:KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
-                props.addTask ?  props.addTask(text) : console.log('error')
+                props.addTask && props.todolistId ?  props.addTask(text,props.todolistId) : console.log('error')
             }
     }
 
