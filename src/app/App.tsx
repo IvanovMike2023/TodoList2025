@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import s from './app.module.css'
+import s from '../app.module.css'
 import './App.css';
-import {Todolist} from "./Components/Todolist";
-import {AddItem} from "./Components/AddItem";
+import {Todolist} from "../Components/Todolist";
+import {AddItem} from "../Components/AddItem";
 import {v1} from "uuid";
+import {useSelector} from "react-redux";
+import {RootState} from "./store";
 
 type FilterValues = 'all' | 'ative'
 export type Todolist = {
@@ -22,6 +24,8 @@ export type TasksState ={
 
 
 function App() {
+    const taskss = useSelector<RootState,TasksState>(state=>state.tasks)
+    console.log(taskss)
 const todoListId1=v1()
 const todoListId2=v1()
     const Tasks ={
@@ -44,19 +48,23 @@ const todoListId2=v1()
     const [todolist, setTodoList] = useState<Todolist[]>([
         {id: todoListId1, title: 'cass', filter: 'all'},
         {id: todoListId2, title: 'cascasc', filter: 'all'},
+
     ])
 
-    const addTask = (title: string,todolistId:string) => {
+    const addTask = (title: string,id:string) => {
         const newTask = {id: v1(), title: title, isdone: true}
-        const todolistTasks = tasks[todolistId]
-        tasks[todolistId]=[...todolistTasks,newTask]
+
+        const todolistTasks = tasks[id]
+        tasks[id]=[...todolistTasks,newTask]
         setTasks({...tasks})
     }
 const addTodoList=(title: string)=>{
-    const newTodolist={id:v1(),title:title,filter:'all'}
+    const newTodolist={id: todoListId2, title: 'cascasc', filter: 'all'}
     //todolist=[todolist,newTodolist]
-    console.log(todolist)
-    console.log(title)
+    //todolist.push(newTodolist)
+    //setTodoList(newTodolist)
+    //console.log(todolist)
+   // console.log(newTodolist)
 }
     return (
         <div className={s.AppContainer}>
@@ -69,12 +77,12 @@ const addTodoList=(title: string)=>{
                 </div>
             </div>
             <div className={s.WrapperBody}>
-                <AddItem addTodoList={addTodoList}/>
+                <AddItem onCreateItem={addTodoList}/>
             </div>
             <div className={s.Container}>
                 {todolist.map((el) => {
                     return <Todolist key={el.id} todoListId={el.id} deleteTask={deleteTask} title={el.title} tasks={tasks}
-                                     addTask={addTask}/>
+                                     onCreateItem={addTask}/>
                 })}
             </div>
         </div>
