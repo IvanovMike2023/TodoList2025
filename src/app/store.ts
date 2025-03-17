@@ -1,6 +1,7 @@
 import {tasksReducer} from "../Components/taskReducer";
 import {todolistsReducer} from "../Components/todoListReducer";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {v1} from "uuid";
 
 // объединение reducer'ов с помощью combineReducers
 const rootReducer = combineReducers({

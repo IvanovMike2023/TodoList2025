@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useReducer, useState} from 'react';
 import s from '../app.module.css'
-import './App.css';
 import {Todolist} from "../Components/Todolist";
 import {AddItem} from "../Components/AddItem";
 import {v1} from "uuid";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./store";
+import {addTodoListAC, todolistsReducer} from "../Components/todoListReducer";
 
 type FilterValues = 'all' | 'ative'
 export type Todolist = {
@@ -13,59 +13,43 @@ export type Todolist = {
     title: string
     filter: FilterValues
 }
- export type Task = {
+export type Task = {
     id: string
     title: string
     isdone: boolean
 }
-export type TasksState ={
-    [key:string]:Task[]
+export type TasksState = {
+    [key: string]: Task[]
 }
 
 
 function App() {
-    const taskss = useSelector<RootState,TasksState>(state=>state.tasks)
-    console.log(taskss)
-const todoListId1=v1()
-const todoListId2=v1()
-    const Tasks ={
-        [todoListId1]:[
-        {id: v1(), title: 'xsax', isdone: true},
-        {id: v1(), title: '33333', isdone: true},
-        {id: v1(), title: '3333', isdone: true},
-        {id: v1(), title: '55555', isdone: true}
-    ],   [todoListId2]:[
-        {id: v1(), title: '22222', isdone: true},
-        {id: v1(), title: '2222', isdone: true}
-    ]
-}
-    const deleteTask = (todolistId:string,taskId:string) => {
-        tasks[todolistId]=[...tasks[todolistId].filter((el)=>el.id!=taskId)]
+
+    const tasks = useSelector<RootState, TasksState>(state => state.tasks)
+    const  todolists= useSelector<RootState, Todolist[]>(state => state.todolists)
+    const deleteTask = (todolistId: string, taskId: string) => {
+        tasks[todolistId] = [...tasks[todolistId].filter((el) => el.id != taskId)]
         setTasks({...tasks})
     }
 
-    const [tasks, setTasks] = useState<TasksState>(Tasks)
-    const [todolist, setTodoList] = useState<Todolist[]>([
-        {id: todoListId1, title: 'cass', filter: 'all'},
-        {id: todoListId2, title: 'cascasc', filter: 'all'},
-
-    ])
-
-    const addTask = (title: string,id:string) => {
+    const [task, setTasks] = useState<TasksState>({})
+    const dispatch = useDispatch();
+    const addTask = (title: string, id: string) => {
         const newTask = {id: v1(), title: title, isdone: true}
 
         const todolistTasks = tasks[id]
-        tasks[id]=[...todolistTasks,newTask]
+        tasks[id] = [...todolistTasks, newTask]
         setTasks({...tasks})
     }
-const addTodoList=(title: string)=>{
-    const newTodolist={id: todoListId2, title: 'cascasc', filter: 'all'}
-    //todolist=[todolist,newTodolist]
-    //todolist.push(newTodolist)
-    //setTodoList(newTodolist)
-    //console.log(todolist)
-   // console.log(newTodolist)
-}
+    // const addTodoList = (title: string) => {
+    //     const action = addTodoListAC(title)
+    //     dispatchTodoList(action)
+    //     setTasks({...tasks, [action.payload.title]: []})
+    // }
+    const addTodolist = useCallback((title: string) => {
+        const action = addTodoListAC(title);
+        dispatch(action);
+    }, [dispatch]);
     return (
         <div className={s.AppContainer}>
             <div className={s.HeadWrapper}>
@@ -77,13 +61,15 @@ const addTodoList=(title: string)=>{
                 </div>
             </div>
             <div className={s.WrapperBody}>
-                <AddItem onCreateItem={addTodoList}/>
+                <AddItem onCreateItem={addTodolist}/>
             </div>
             <div className={s.Container}>
-                {todolist.map((el) => {
-                    return <Todolist key={el.id} todoListId={el.id} deleteTask={deleteTask} title={el.title} tasks={tasks}
+                { todolists.map((el) => {
+                    let allTodolistTasks = tasks[el.id]
+                    return <Todolist key={el.id} todoListId={el.id} deleteTask={deleteTask} title={el.title}
+                                     tasks={allTodolistTasks}
                                      onCreateItem={addTask}/>
-                })}
+                })  }
             </div>
         </div>
     );
