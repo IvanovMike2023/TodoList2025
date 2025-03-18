@@ -5,7 +5,7 @@ import {AddItemForm} from "../common/components/AddItemForm/AddItemForm";
 import {v1} from "uuid";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./store";
-import {addTodoListAC, changeTitleTodoListAC, todolistsReducer} from "../features/todolists/model/todoListReducer";
+import {addTodoListAC, changeTitleTodoListAC, todolistsReducer} from "../common/components/todoListReducer";
 import {Header} from "../common/components/Header/Header";
 import {Main} from "./Main";
 

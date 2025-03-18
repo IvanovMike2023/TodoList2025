@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../app/store";
 import {TasksState, TodolistType} from "../../../../app/App";
-import {changeTitleTodoListAC} from "../../model/todoListReducer";
+import {changeTitleTodoListAC} from "../../../../common/components/todoListReducer";
 import {v1} from "uuid";
 
 export const TodoLists=()=>{

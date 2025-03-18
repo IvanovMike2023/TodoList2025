@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import {addTaskAC, tasksReducer,} from "./features/todolists/model/taskReducer";
+import {addTaskAC, tasksReducer,} from "./common/components/taskReducer";
 
 test('should add task',()=>{
     const todoListId1=v1()
@@ -35,6 +35,7 @@ test('should remove task',()=>{
             {id: v1(), title: '2222', isdone: true}
         ]
     }
+
 
     const endState= tasksReducer(Tasks,addTaskAC(newTask,todoListId1))
     expect(endState[todoListId1].length).toBe(5)

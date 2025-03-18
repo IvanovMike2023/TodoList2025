@@ -2,7 +2,7 @@ import s from "../app.module.css";
 import {AddItemForm} from "../common/components/AddItemForm/AddItemForm";
 import React from "react";
 import {useDispatch} from "react-redux";
-import {addTodoListAC} from "../features/todolists/model/todoListReducer";
+import {addTodoListAC} from "../common/components/todoListReducer";
 import {TodoLists} from "../features/todolists/ui/TodoLists/TodoLists";
 
 export const Main = () => {

@@ -1,5 +1,5 @@
-import {tasksReducer} from "../features/todolists/model/taskReducer";
-import {todolistsReducer} from "../features/todolists/model/todoListReducer";
+import {tasksReducer} from "../common/components/taskReducer";
+import {todolistsReducer} from "../common/components/todoListReducer";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import {v1} from "uuid";
 

@@ -1,4 +1,4 @@
-import {Task, TasksState} from "../../../app/App";
+import {Task, TasksState} from "../../app/App";
 import {v1} from "uuid";
 import {addTodoListAC, todoListId1, todoListId2} from "./todoListReducer";
 
