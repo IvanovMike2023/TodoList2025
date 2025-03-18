@@ -1,14 +1,14 @@
-import {Task, TasksState, Todolist} from "../app/App";
+import {Task, TasksState, TodolistType} from "../../../app/App";
 import {v1} from "uuid";
 export const todoListId1=v1()
 export const todoListId2=v1()
-const initialState: Todolist[] = [
+const initialState: TodolistType[] = [
     // {id: todoListId1, title: 'cass', filter: 'all'},
     // {id: todoListId2, title: 'cascasc', filter: 'all'},
 
 ]
 
-export const todolistsReducer = (state: Todolist[] = initialState, action: ActionsType): Todolist[] => {
+export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType): TodolistType[] => {
 
     switch (action.type) {
         case 'ADD-TODOLIST':

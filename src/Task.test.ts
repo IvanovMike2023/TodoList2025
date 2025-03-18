@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import {addTaskAC, tasksReducer,} from "./Components/taskReducer";
+import {addTaskAC, tasksReducer,} from "./features/todolists/model/taskReducer";
 
 test('should add task',()=>{
     const todoListId1=v1()

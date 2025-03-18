@@ -1,11 +1,11 @@
-import s from "../app.module.css";
+import s from "../../../app.module.css";
 import {IconButton, TextField} from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import React, {ChangeEvent,KeyboardEvent, useState} from "react";
 type Props={
     onCreateItem:(title:string)=>void
 }
-export const AddItem = (props:Props) => {
+export const AddItemForm = (props:Props) => {
     const [text,setText]=useState('')
     const addTitle=()=>{
         props.onCreateItem(text)
