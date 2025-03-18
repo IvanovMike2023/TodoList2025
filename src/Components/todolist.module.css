@@ -1,5 +1,22 @@
+.MainPaper{
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
 .TitleTodoList{
     display: flex;
-    align-items: center;
     justify-content: center;
+}
+.TaskInput{
+    display: flex;
+    justify-content: center;
+}
+.TaskItemsWrap{
+    list-style-type:none;
+}
+.TaskItems{
+    display: flex;
+    justify-content: space-between;
+}
+.ButtonWrap{
+    padding: 10px;
 }

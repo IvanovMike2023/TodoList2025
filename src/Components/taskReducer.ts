@@ -15,11 +15,14 @@ const initialState = {
 }
 
 export const tasksReducer = (state: TasksState = initialState, action: ActionsType): TasksState => {
+
     switch (action.type) {
         case 'ADD-TASK':
             return {...state, [action.payload.todolistId]: [...state[action.payload.todolistId], action.payload.task]};
         case'REMOVE-TASK':
             return {...state,[action.payload.todolistId]:state[action.payload.todolistId].filter((el)=>el.id!=action.payload.taskId)}
+        // case'CHANGE-TITLE':
+        //     return {...state,[action.payload.todolistId]:[{id: v1(), title: '2222', isdone: true}]}
         case 'ADD-TODOLIST': {
             return {
                 ...state,
@@ -35,8 +38,11 @@ export const addTaskAC = (task: Task, todolistId: string) =>
     ({type: 'ADD-TASK', payload: {task, todolistId}} as const)
 export const removeTaskAC = (taskId: string, todolistId: string) =>
     ({type: 'REMOVE-TASK', payload: {taskId, todolistId}} as const)
+export const changeTitleTodoListAC1 = (title: string, todolistId: string) =>
+    ({type: 'CHANGE-TITLE', payload: {title, todolistId}} as const)
 //types
 type ActionsType =
     ReturnType<typeof addTaskAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTodoListAC>
+    | ReturnType<typeof changeTitleTodoListAC1>

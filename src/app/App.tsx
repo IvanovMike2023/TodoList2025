@@ -5,7 +5,7 @@ import {AddItem} from "../Components/AddItem";
 import {v1} from "uuid";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./store";
-import {addTodoListAC, todolistsReducer} from "../Components/todoListReducer";
+import {addTodoListAC, changeTitleTodoListAC, todolistsReducer} from "../Components/todoListReducer";
 
 type FilterValues = 'all' | 'ative'
 export type Todolist = {
@@ -24,32 +24,32 @@ export type TasksState = {
 
 
 function App() {
+    const [task, setTasks] = useState<TasksState>({})
 
     const tasks = useSelector<RootState, TasksState>(state => state.tasks)
-    const  todolists= useSelector<RootState, Todolist[]>(state => state.todolists)
+    const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
+    const dispatch = useDispatch();
+
     const deleteTask = (todolistId: string, taskId: string) => {
         tasks[todolistId] = [...tasks[todolistId].filter((el) => el.id != taskId)]
         setTasks({...tasks})
     }
 
-    const [task, setTasks] = useState<TasksState>({})
-    const dispatch = useDispatch();
-    const addTask = (title: string, id: string) => {
+    const createTask = (title: string, id: string) => {
         const newTask = {id: v1(), title: title, isdone: true}
-
         const todolistTasks = tasks[id]
         tasks[id] = [...todolistTasks, newTask]
         setTasks({...tasks})
     }
-    // const addTodoList = (title: string) => {
-    //     const action = addTodoListAC(title)
-    //     dispatchTodoList(action)
-    //     setTasks({...tasks, [action.payload.title]: []})
-    // }
-    const addTodolist = useCallback((title: string) => {
+
+    const createTodolist = useCallback((title: string) => {
         const action = addTodoListAC(title);
         dispatch(action);
     }, [dispatch]);
+    const changeTitleTodolist = useCallback((title: string,todolistId:string) => {
+        const action = changeTitleTodoListAC(title,todolistId);
+        dispatch(action);
+    }, []);
     return (
         <div className={s.AppContainer}>
             <div className={s.HeadWrapper}>
@@ -61,15 +61,17 @@ function App() {
                 </div>
             </div>
             <div className={s.WrapperBody}>
-                <AddItem onCreateItem={addTodolist}/>
+                <AddItem onCreateItem={createTodolist}/>
             </div>
             <div className={s.Container}>
-                { todolists.map((el) => {
+                {todolists.map((el) => {
                     let allTodolistTasks = tasks[el.id]
                     return <Todolist key={el.id} todoListId={el.id} deleteTask={deleteTask} title={el.title}
                                      tasks={allTodolistTasks}
-                                     onCreateItem={addTask}/>
-                })  }
+                                     onCreateItem={createTask}
+                                     changeTitleTodolist={changeTitleTodolist}
+                    />
+                })}
             </div>
         </div>
     );

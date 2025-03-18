@@ -23,7 +23,7 @@ export const AddItem = (props:Props) => {
 
     return <>
         <div className={s.ButtonAdd}>
-            <TextField onKeyDown={handleTextFieldCreate} id="outlined-basic" value={text} onChange={handleTextFieldChange}  label="Введите название" variant="outlined" />
+            <TextField size="small" onKeyDown={handleTextFieldCreate} id="outlined-basic" value={text} onChange={handleTextFieldChange}  label="Введите название" variant="outlined" />
             <IconButton onClick={addTitle} color="primary"><AddBoxOutlinedIcon color={"primary"}/></IconButton>
         </div>
     </>
