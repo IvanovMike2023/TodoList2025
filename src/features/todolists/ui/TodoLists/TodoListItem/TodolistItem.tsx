@@ -1,9 +1,7 @@
 import {AddItemForm} from "../../../../../common/components/AddItemForm/AddItemForm";
-import {Box, Button, ButtonGroup, Checkbox, IconButton, Paper, TextField} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import s from '../../../../../common/components/todolist.module.css'
-import {Task, TasksState} from "../../../../../app/App";
+import {Box, Paper} from "@mui/material";
+import React from "react";
+import {Task} from "../../../../../app/App";
 import {TodoListTitle} from "./TodoListTitle/TodoListTitle";
 import {Tasks} from "./Tasks/Tasks";
 import {FilterButtonst} from "./FilterButtons/FilterButtonst";
@@ -14,6 +12,7 @@ type Props = {
     deleteTask: (taskId: string, todolistId: string) => void
     onCreateItem: (title: string, id: string) => void
     changeTitleTodolist: (title: string, id: string) => void
+    changeTaskTitle: (title: string, taskId: string,todolistId:string) => void
     tasks: Task[]
 }
 export const TodolistItem = (props: Props) => {
@@ -32,7 +31,7 @@ export const TodolistItem = (props: Props) => {
                     <TodoListTitle title={props.title} todoListId={props.todoListId}
                                    changeTitleTodolist={props.changeTitleTodolist}/>
                         <AddItemForm onCreateItem={todolistHandler}/>
-                    <Tasks tasks={props.tasks} todoListId={props.todoListId} deleteTask={props.deleteTask}/>
+                    <Tasks changeTaskTitle={props.changeTaskTitle} tasks={props.tasks} todoListId={props.todoListId} deleteTask={props.deleteTask}/>
                     <FilterButtonst/>
                 </Paper>
             </div>
