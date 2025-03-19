@@ -6,6 +6,8 @@ type TodoListTitleType={
     title: string,
     todoListId:string
     changeTitleTodolist: (title: string, id: string) => void
+    deleteTodoList: (todolislId:string)=>void
+
 }
 export const TodoListTitle=(props:TodoListTitleType)=>{
     const [edit, setEdit] = useState(false)
@@ -27,12 +29,15 @@ export const TodoListTitle=(props:TodoListTitleType)=>{
             setEdit(false)
         }
     }
+    const deleteTodoListHandler=()=>{
+        props.deleteTodoList(props.todoListId)
+    }
     return   <div className={s.TitleTodoList}>
         {edit ?
             <TextField size="small" onKeyDown={EditKeyDownTaskTitleHandler}
                        onChange={EditTaskTitleHandler} value={props.title} onBlur={OfTaskTitleHandler}
                        label="Введите название" variant="outlined"/>
             : <p onClick={OnTaskTitleHandler}>{props.title}</p>}
-        <IconButton color="primary"><DeleteIcon color={'action'}/></IconButton>
+        <IconButton color="primary"><DeleteIcon onClick={deleteTodoListHandler} color={'action'}/></IconButton>
     </div>
 }

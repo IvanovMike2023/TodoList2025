@@ -1,6 +1,5 @@
 import {TodolistType} from "../../app/App";
-import {v1} from "uuid";
-import {createAction} from "@reduxjs/toolkit";
+import {createAction, nanoid} from "@reduxjs/toolkit";
 
 const initialState: TodolistType[] = [
     // {id: todoListId1, title: 'cass', filter: 'all'},
@@ -18,7 +17,7 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
                 filter: 'all'
             }, ...state]
         case'REMOVE-TODOLIST':
-            return state
+            return state.filter(fl=>fl.id!=action.payload.todolistId)
         case'CHANGE-TITLE':
             return state.map(el=>el.id===action.payload.todolistId ? {...el,title:action.payload.title}:{...el})
         default:
@@ -29,17 +28,18 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
 //export const addTodoListAC = (title:string) =>
    // ({type: 'ADD-TODOLIST', title: title, todolistId: v1()} as const)
 export const createTodoListAC=createAction('ADD-TODOLIST',(title:string)=>{
-    return {payload: {title:title,todolistId: v1()}}
+    return {payload: {title:title,todolistId: nanoid()}}
 })
-export const deleteTodoListAC = createAction('REMOVE-TODOLIST',(taskId: string, todolistId: string)=>{
-    return {payload: {taskId,todolistId}}
+export const deleteTodoListAC = createAction('REMOVE-TODOLIST',( todolistId: string)=>{
+    return {payload: {todolistId}}
 })
 export const removeTodoListAC = (taskId: string, todolistId: string) =>
     ({type: 'REMOVE-TODOLIST', payload: {taskId, todolistId}} as const)
-export const changeTitleTodoListAC = (title: string, todolistId: string) =>
-    ({type: 'CHANGE-TITLE', payload: {title, todolistId}} as const)
+export const changeTitleTodoListAC=createAction('CHANGE-TITLE',(title: string, todolistId: string)=>{
+      return {payload:{title:title, todolistId: todolistId}}
+  })
 //types
 type ActionsType =
     ReturnType<typeof createTodoListAC>
-    | ReturnType<typeof removeTodoListAC>
+    | ReturnType<typeof deleteTodoListAC>
     | ReturnType<typeof changeTitleTodoListAC>

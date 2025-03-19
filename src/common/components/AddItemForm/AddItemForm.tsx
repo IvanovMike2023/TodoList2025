@@ -9,6 +9,7 @@ export const AddItemForm = (props:Props) => {
     const [text,setText]=useState('')
     const addTitle=()=>{
         props.onCreateItem(text)
+        setText('')
     }
 
     const handleTextFieldChange=(e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{

@@ -1,5 +1,6 @@
 import {Task, TasksState} from "../../app/App";
 import {createTodoListAC} from "./todoListReducer";
+import {nanoid} from "@reduxjs/toolkit";
 
 const initialState = {
     // [todoListId1]:[
@@ -16,7 +17,8 @@ const initialState = {
 export const tasksReducer = (state: TasksState = initialState, action: ActionsType): TasksState => {
     switch (action.type) {
         case 'ADD-TASK':
-            return {...state, [action.payload.todolistId]: [...state[action.payload.todolistId], action.payload.task]};
+            const newtask={id: nanoid(), title: action.payload.title, isdone: true}
+            return {...state, [action.payload.todolistId]: [...state[action.payload.todolistId], newtask]};
         case'REMOVE-TASK':
             return {...state,[action.payload.todolistId]:state[action.payload.todolistId].filter((el)=>el.id!=action.payload.taskId)}
         case'CHANGE-TITLETASK':
@@ -36,15 +38,15 @@ export const tasksReducer = (state: TasksState = initialState, action: ActionsTy
     }
 }
 //actions
-export const addTaskAC = (task: Task, todolistId: string) =>
-    ({type: 'ADD-TASK', payload: {task, todolistId}} as const)
+export const createTaskAC = (title: string, todolistId: string) =>
+    ({type: 'ADD-TASK', payload: {title, todolistId}} as const)
 export const removeTaskAC = (taskId: string, todolistId: string) =>
     ({type: 'REMOVE-TASK', payload: {taskId, todolistId}} as const)
 export const changeTaskTitleAC = (title: string, taskId:string,todolistId: string) =>
     ({type: 'CHANGE-TITLETASK', payload: {title, taskId,todolistId}} as const)
 //types
 type ActionsType =
-    ReturnType<typeof addTaskAC>
+    ReturnType<typeof createTaskAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof createTodoListAC>
     | ReturnType<typeof changeTaskTitleAC>

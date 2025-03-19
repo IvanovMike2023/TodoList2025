@@ -14,6 +14,7 @@ type Props = {
     changeTitleTodolist: (title: string, id: string) => void
     changeTaskTitle: (title: string, taskId: string,todolistId:string) => void
     tasks: Task[]
+    deleteTodoList: (todolislId:string)=>void
 }
 export const TodolistItem = (props: Props) => {
     const todolistHandler = (title: string) => {
@@ -28,7 +29,7 @@ export const TodolistItem = (props: Props) => {
         }}>
             <div className="MuiPaper-root">
                 <Paper elevation={3}>
-                    <TodoListTitle title={props.title} todoListId={props.todoListId}
+                    <TodoListTitle deleteTodoList={props.deleteTodoList} title={props.title} todoListId={props.todoListId}
                                    changeTitleTodolist={props.changeTitleTodolist}/>
                         <AddItemForm onCreateItem={todolistHandler}/>
                     <Tasks changeTaskTitle={props.changeTaskTitle} tasks={props.tasks} todoListId={props.todoListId} deleteTask={props.deleteTask}/>
