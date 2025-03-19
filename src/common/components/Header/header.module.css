@@ -1,0 +1,17 @@
+.HeadWrapperdark {
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+.HeadWrapperlight {
+    height: 60px;
+    background-color: #61dafb;
+}
+
+.Menu {
+    margin-left: 50px;
+}
+
+.Login {
+    justify-items: end;
+    margin-right: 50px;
+}
