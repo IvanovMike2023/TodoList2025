@@ -1,21 +1,24 @@
 import {TodolistType} from "../../app/App";
 import {createAction, nanoid} from "@reduxjs/toolkit";
+import {TodolistsType} from "./Login/AppTttpRequest";
 
-const initialState: TodolistType[] = [
+const initialState: TodolistsType[] = [
     // {id: todoListId1, title: 'cass', filter: 'all'},
     // {id: todoListId2, title: 'cascasc', filter: 'all'},
 
 ]
 
-export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType): TodolistType[] => {
-
+export const todolistsReducer = (state: TodolistsType[] = initialState, action: ActionsType): TodolistsType[] => {
+//debugger
     switch (action.type) {
         case 'ADD-TODOLIST':
             return [{
                 id: action.payload.todolistId,
                 title: action.payload.title,
-                filter: 'all'
+                addDate: 'string', order: 20
             }, ...state]
+        case'GET-TODOLIST':
+            return action.payload//action.payload
         case'REMOVE-TODOLIST':
             return state.filter(fl=>fl.id!=action.payload.todolistId)
         case'CHANGE-TITLE':
@@ -25,8 +28,10 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
     }
 }
 //actions
-//export const addTodoListAC = (title:string) =>
-   // ({type: 'ADD-TODOLIST', title: title, todolistId: v1()} as const)
+
+export const getTodoListAC=createAction('GET-TODOLIST',(todolists:TodolistsType[])=>{
+    return {payload: todolists}
+})
 export const createTodoListAC=createAction('ADD-TODOLIST',(title:string)=>{
     return {payload: {title:title,todolistId: nanoid()}}
 })
@@ -43,3 +48,4 @@ type ActionsType =
     ReturnType<typeof createTodoListAC>
     | ReturnType<typeof deleteTodoListAC>
     | ReturnType<typeof changeTitleTodoListAC>
+    | ReturnType<typeof getTodoListAC>

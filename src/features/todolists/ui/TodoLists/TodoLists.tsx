@@ -11,9 +11,11 @@ import {useAppSelector} from "../../../../app/hooks/useAppSelector";
 
 export const TodoLists=()=>{
     const todolists = useAppSelector(state => state.todolists)
+
     const tasks = useAppSelector(state => state.tasks)
+    console.log(todolists)
+    console.log(tasks)
     const dispatch = useAppDispatch();
-    const newId=useId()
     const [task, setTasks] = useState<TasksState>({})
 const deleteTodoList=(todolislId:string)=>{
         dispatch(deleteTodoListAC(todolislId))
@@ -39,6 +41,7 @@ const deleteTodoList=(todolislId:string)=>{
     return    <div className={s.Container}>
         {todolists.map((el) => {
             let allTodolistTasks = tasks[el.id]
+            console.log(allTodolistTasks)
             return <TodolistItem key={el.id} todoListId={el.id} deleteTask={deleteTask} title={el.title}
                                  tasks={allTodolistTasks}
                                  onCreateItem={createTask}

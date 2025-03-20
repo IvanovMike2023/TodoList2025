@@ -15,7 +15,6 @@ export const Tasks = (props: TasksType) => {
     const [edit, setEdit] = useState(false)
     const [title, setTitle] = useState('')
     const [taskId, settaskId] = useState('')
-
     const OnTaskTitleHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setEdit(true)
         console.log(e.currentTarget.id)
