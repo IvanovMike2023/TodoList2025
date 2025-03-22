@@ -6,8 +6,6 @@ const token = "ef7ff5dd-c4a1-4818-a09c-d1c24bd17361"
 export type TodolistsType=
     { id: string, title: string, addDate: string, order: number }
 export const AppTttpRequest=()=>{
-
-
 const dispatch = useAppDispatch()
     const [state,setState]=useState<TodolistsType[]>([])
     useEffect(()=>{
