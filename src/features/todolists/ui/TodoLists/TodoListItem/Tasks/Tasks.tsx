@@ -35,8 +35,7 @@ export const Tasks = (props: TasksType) => {
         }
     }
     return <>   {props.tasks.map((el) => {
-
-        return <>
+        return <div key={el.id}>
             {edit && taskId === el.id ? <TextField size="small" onKeyDown={EditKeyDownTaskTitleHandler}
                                                    onChange={EditTaskTitleHandler} value={title}
                                                    onBlur={OfTaskTitleHandler}
@@ -48,7 +47,7 @@ export const Tasks = (props: TasksType) => {
                                                             onClick={() => props.deleteTask(props.todoListId, el.id)}
                                                             color={'action'}/></IconButton>
                 </div>}
-        </>
+        </div>
     })}</>
 }
 

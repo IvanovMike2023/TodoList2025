@@ -1,10 +1,10 @@
 import {TodolistType} from "../../app/App";
 import {createAction, nanoid} from "@reduxjs/toolkit";
-import {TodolistsType} from "./Login/AppTttpRequest";
+import {TodolistsType} from "./Login/AppHttpRequest";
+import {Dispatch} from "react";
+import axios from "axios";
 
 const initialState: TodolistsType[] = [
-    // {id: todoListId1, title: 'cass', filter: 'all'},
-    // {id: todoListId2, title: 'cascasc', filter: 'all'},
 
 ]
 
@@ -15,10 +15,10 @@ export const todolistsReducer = (state: TodolistsType[] = initialState, action: 
             return [{
                 id: action.payload.todolistId,
                 title: action.payload.title,
-                addDate: 'string', order: 20
+                addedDate: 'string', order: 20
             }, ...state]
         case'GET-TODOLIST':
-            return action.payload//action.payload
+            return action.payload.map(tl=>({...tl}))
         case'REMOVE-TODOLIST':
             return state.filter(fl=>fl.id!=action.payload.todolistId)
         case'CHANGE-TITLE':
@@ -43,6 +43,22 @@ export const removeTodoListAC = (taskId: string, todolistId: string) =>
 export const changeTitleTodoListAC=createAction('CHANGE-TITLE',(title: string, todolistId: string)=>{
       return {payload:{title:title, todolistId: todolistId}}
   })
+
+//thuks
+export const fetchTodolistsTC = () => {
+    const token = "ef7ff5dd-c4a1-4818-a09c-d1c24bd17361"
+    return (dispatch: Dispatch<ActionsType>) => {
+        axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then((res) => {
+                dispatch(getTodoListAC(res.data))
+            })
+    }
+}
+
+
 //types
 type ActionsType =
     ReturnType<typeof createTodoListAC>

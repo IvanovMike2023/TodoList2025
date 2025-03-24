@@ -1,16 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import s from '../app.module.css'
 import {Header} from "../common/components/Header/Header";
 import {Main} from "./Main";
-import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import {CssBaseline, ThemeProvider} from "@mui/material";
 import {getTheme} from "../common/theme/theme";
 import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
-import {changeThemeModeAC, ThemeMode} from "../common/components/themeReducer";
-import {dark} from "@mui/material/styles/createPalette";
+import {changeThemeModeAC} from "../common/components/themeReducer";
 import {selectThemeMode} from "./hooks/app-selectord";
-import axios from "axios";
-import {AppTttpRequest} from "../common/components/Login/AppTttpRequest";
 
 type FilterValues = 'all' | 'ative'
 export type TodolistType = {
@@ -43,7 +40,6 @@ function App() {
             <CssBaseline/>
             <div className={s.AppContainer}>
                 <Header changeTheme={changeTheme}/>
-                <AppTttpRequest/>
                 <Main/>
             </div>
         </ThemeProvider>
