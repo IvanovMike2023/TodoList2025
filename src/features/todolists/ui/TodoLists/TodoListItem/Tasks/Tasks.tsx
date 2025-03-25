@@ -20,11 +20,11 @@ export const Tasks = (props: PropsTasksType) => {
         settaskId(e.currentTarget.id)
     }
     const OfTaskTitleHandler = () => {
+        props.changeTaskTitle(title,taskId,props.todoListId)
         setEdit(false)
     }
     const EditTaskTitleHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value)
-        props.changeTaskTitle(title,taskId,props.todoListId)
     }
     const EditKeyDownTaskTitleHandler = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter') {
@@ -37,9 +37,9 @@ export const Tasks = (props: PropsTasksType) => {
                                                    onChange={EditTaskTitleHandler} value={title}
                                                    onBlur={OfTaskTitleHandler}
                                                    label="Введите название" variant="outlined"/>
-                : <div id={el.id} key={el.id} onClick={OnTaskTitleHandler} className={s.TaskItems}>
+                : <div  key={el.id}  className={s.TaskItems}>
                     <div><Checkbox defaultChecked/>
-                        {el.title}</div>
+                       <span id={el.id} onClick={OnTaskTitleHandler}>{el.title}</span> </div>
                     <IconButton color="primary"><DeleteIcon style={{width: '20px'}}
                                                             onClick={() => props.deleteTask(props.todoListId, el.id)}
                                                             color={'action'}/></IconButton>

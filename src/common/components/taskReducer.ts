@@ -24,13 +24,12 @@ export const tasksReducer = (state: TasksState = initialState, action: ActionsTy
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].filter((el) => el.id != action.payload.taskId)
             }
-        case'CHANGE-TITLETASK': {
+        case'CHANGE-TITLETASK':
             return {
                 ...state,
-                // [action.payload.todolistId]: state[action.payload.todolistId].map(el => el.id === action.payload.taskId ? {
-                //     action.payload.apiModel} : {...el})
+                [action.payload.todolistId]: state[action.payload.todolistId].map(el=>el.id===action.payload.taskId ? {...el,...action.payload.apiModel}:el)
             }
-        }
+
         case 'ADD-TODOLIST': {
             return {
                 ...state,
@@ -69,32 +68,36 @@ export const getTaskTC = (todolistId: string) => (dispatch: AppDispatch) => {
         dispatch(getTaskAC(todolistId, res.data.items))
     })
 }
-export const deleteTaskTC = (taskId:string, todolistId: string) => (dispatch: AppDispatch) => {
-    APITask.deleteTask(taskId,todolistId).then(res => {
-        dispatch(deleteTaskAC(taskId,todolistId))
+export const deleteTaskTC = (taskId: string, todolistId: string) => (dispatch: AppDispatch) => {
+    APITask.deleteTask(taskId, todolistId).then(res => {
+        dispatch(deleteTaskAC(taskId, todolistId))
     })
 }
 
-export const changeTaskTC = (domainModel: UpdateDomainTaskModelType,taskId:string,todolistId: string) => (dispatch: AppDispatch,getState:()=>RootState) => {
-    const state=getState()
-    const taskss = state.tasks[todolistId].find(el=>el.id===taskId)
-    console.log(taskss)
-    if(!taskss){
+export const changeTaskTC = (domainModel: UpdateDomainTaskModelType, taskId: string, todolistId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const state = getState()
+    const task = state.tasks[todolistId].find(el => el.id === taskId)
+    //console.log(taskss)
+    if (!task) {
         console.warn("task not found in the state");
         return;
     }
     const apiModel: UpdateTaskModelType = {
-        deadline: taskss.deadline,
-        description: taskss.description,
-        priority: taskss.priority,
-        startDate: taskss.startDate,
-        title: taskss.title,
-        completed: taskss.completed,
-        status: taskss.status,
+        deadline: task.deadline,
+        description: task.description,
+        priority: task.priority,
+        startDate: task.startDate,
+        title: task.title,
+        status: task.status,
         ...domainModel
     };
-    APITask.changeTask(apiModel,taskId,todolistId).then(res => {
-        dispatch(changeTaskTitleAC(apiModel,taskId,todolistId))
+    console.log(task.title)
+    console.log(domainModel)
+    APITask.changeTask(apiModel, taskId, todolistId).then(res => {
+        if (res.data.messages.length === 0) {
+            dispatch(changeTaskTitleAC(domainModel, taskId, todolistId))
+        }else console.log('sssss')
+
     })
 }
 //types
@@ -110,7 +113,7 @@ export type UpdateDomainTaskModelType = {
     title?: string;
     description?: string;
     status?: TaskStatuses;
-    priority?: TaskPriorities ;
+    priority?: TaskPriorities;
     startDate?: string;
     deadline?: string;
 };

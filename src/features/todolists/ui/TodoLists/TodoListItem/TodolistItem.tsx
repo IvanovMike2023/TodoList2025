@@ -32,6 +32,9 @@ export const TodolistItem = (props: Props) => {
                     <TodoListTitle deleteTodoList={props.deleteTodoList} title={props.title} todoListId={props.todoListId}
                                    changeTitleTodolist={props.changeTitleTodolist}/>
                         <AddItemForm onCreateItem={todolistHandler}/>
+                    {props.tasks.map(el=>{
+                        return <div>{el.title}</div>
+                    })}
                     <Tasks changeTaskTitle={props.changeTaskTitle} tasks={props.tasks} todoListId={props.todoListId} deleteTask={props.deleteTask}/>
                     <FilterButtonst/>
                 </Paper>

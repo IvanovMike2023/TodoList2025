@@ -65,7 +65,6 @@ export enum TaskPriorities {
 export type UpdateTaskModelType = {
     deadline: string;
     description: any;
-    completed: boolean;
     priority: TaskPriorities;
     startDate: string;
     status: TaskStatuses;
