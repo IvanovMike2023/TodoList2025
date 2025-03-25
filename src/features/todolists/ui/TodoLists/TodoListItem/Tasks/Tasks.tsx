@@ -2,22 +2,21 @@ import s from "../../../../../../common/components/todolist.module.css";
 import {Checkbox, IconButton, TextField} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, {ChangeEvent, DetailedHTMLProps, HTMLAttributes, KeyboardEvent, MouseEventHandler, useState} from "react";
-import {Task} from "../../../../../../app/App";
+import {TaskType} from "../../../../api/APITodoList";
 
-type TasksType = {
-    tasks: Task[]
+type PropsTasksType = {
+    tasks: TaskType[]
     deleteTask: (taskId: string, todolistId: string) => void
     changeTaskTitle: (title: string, taskId: string,todolistId:string) => void
     todoListId: string,
 
 }
-export const Tasks = (props: TasksType) => {
+export const Tasks = (props: PropsTasksType) => {
     const [edit, setEdit] = useState(false)
     const [title, setTitle] = useState('')
     const [taskId, settaskId] = useState('')
     const OnTaskTitleHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setEdit(true)
-        console.log(e.currentTarget.id)
         settaskId(e.currentTarget.id)
     }
     const OfTaskTitleHandler = () => {
@@ -26,11 +25,9 @@ export const Tasks = (props: TasksType) => {
     const EditTaskTitleHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value)
         props.changeTaskTitle(title,taskId,props.todoListId)
-        // props.changeTitleTodolist(e.target.value, props.todoListId)
     }
     const EditKeyDownTaskTitleHandler = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter') {
-            // props.changeTitleTodolist(title, props.todoListId)
             setEdit(false)
         }
     }

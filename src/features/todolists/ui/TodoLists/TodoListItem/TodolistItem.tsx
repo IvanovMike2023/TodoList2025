@@ -1,10 +1,10 @@
 import {AddItemForm} from "../../../../../common/components/AddItemForm/AddItemForm";
 import {Box, Paper} from "@mui/material";
 import React from "react";
-import {Task} from "../../../../../app/App";
 import {TodoListTitle} from "./TodoListTitle/TodoListTitle";
 import {Tasks} from "./Tasks/Tasks";
 import {FilterButtonst} from "./FilterButtons/FilterButtonst";
+import {TaskType} from "../../../api/APITodoList";
 
 type Props = {
     title: string,
@@ -13,7 +13,7 @@ type Props = {
     onCreateItem: (title: string, id: string) => void
     changeTitleTodolist: (title: string, id: string) => void
     changeTaskTitle: (title: string, taskId: string,todolistId:string) => void
-    tasks: Task[]
+    tasks: TaskType[]
     deleteTodoList: (todolislId:string)=>void
 }
 export const TodolistItem = (props: Props) => {

@@ -1,12 +1,10 @@
 import s from "../../../../app.module.css";
 import {TodolistItem} from "./TodoListItem/TodolistItem";
 import React, {useEffect, useState} from "react";
-import {TasksState} from "../../../../app/App";
-import {changeTitleTodoListAC, deleteTodoListAC, getTodoListAC} from "../../../../common/components/todoListReducer";
-import {changeTaskTitleAC, createTaskAC} from "../../../../common/components/taskReducer";
+import {changeTodoListTC, deleteTodoListTC, fetchTodolistsTC} from "../../../../common/components/todoListReducer";
+import {changeTaskTC, changeTaskTitleAC, createTaskTC, deleteTaskTC} from "../../../../common/components/taskReducer";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
-import {AppHttpRequest} from "../../../../common/components/Login/AppHttpRequest";
 
 export const TodoLists = () => {
     const todolists = useAppSelector(state => state.todolists)
@@ -14,29 +12,26 @@ export const TodoLists = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        AppHttpRequest().then(res=>dispatch(getTodoListAC(res.data)))
-
+        dispatch(fetchTodolistsTC())
     }, [])
 
-    const [task, setTasks] = useState<TasksState>({})
     const deleteTodoList = (todolislId: string) => {
-        dispatch(deleteTodoListAC(todolislId))
+        dispatch(deleteTodoListTC(todolislId))
     }
     const deleteTask = (todolistId: string, taskId: string) => {
-        tasks[todolistId] = [...tasks[todolistId].filter((el) => el.id != taskId)]
-        setTasks({...tasks})
+        dispatch(deleteTaskTC(taskId,todolistId))
+        //tasks[todolistId] = [...tasks[todolistId].filter((el) => el.id != taskId)]
     }
     const createTask = (title: string, todolistId: string) => {
-        dispatch(createTaskAC(title, todolistId))
-        setTasks({...tasks})
+        dispatch(createTaskTC(title,todolistId))
+       /// setTasks({...tasks})
     }
     const changeTitleTodolist = (title: string, todolistId: string) => {
-        const action = changeTitleTodoListAC(title, todolistId);
-        dispatch(action);
+        dispatch(changeTodoListTC(title,todolistId))
     }
     const changeTaskTitle = (title: string, taskId: string, todolistId: string) => {
-        const action = changeTaskTitleAC(title, taskId, todolistId);
-        dispatch(action);
+       // const action = changeTaskTitleAC(title, taskId, todolistId);
+        dispatch(changeTaskTC({title:title}, taskId, todolistId));
     }
     return <div className={s.Container}>
         {todolists.map((el) => {

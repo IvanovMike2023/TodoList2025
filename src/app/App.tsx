@@ -15,14 +15,8 @@ export type TodolistType = {
     title: string
     filter: FilterValues
 }
-export type Task = {
-    id: string
-    title: string
-    isdone: boolean
-}
-export type TasksState = {
-    [key: string]: Task[]
-}
+
+
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
