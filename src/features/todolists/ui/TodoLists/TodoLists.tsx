@@ -5,6 +5,7 @@ import {changeTodoListTC, deleteTodoListTC, fetchTodolistsTC} from "../../../../
 import {changeTaskTC, changeTaskTitleAC, createTaskTC, deleteTaskTC} from "../../../../common/components/taskReducer";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
+import {Grid, Paper} from "@mui/material";
 
 export const TodoLists = () => {
     const todolists = useAppSelector(state => state.todolists)
@@ -18,7 +19,8 @@ export const TodoLists = () => {
     const deleteTodoList = (todolislId: string) => {
         dispatch(deleteTodoListTC(todolislId))
     }
-    const deleteTask = (todolistId: string, taskId: string) => {
+    const deleteTask = ( taskId: string,todolistId: string) => {
+
         dispatch(deleteTaskTC(taskId,todolistId))
         //tasks[todolistId] = [...tasks[todolistId].filter((el) => el.id != taskId)]
     }
@@ -30,19 +32,26 @@ export const TodoLists = () => {
         dispatch(changeTodoListTC(title,todolistId))
     }
     const changeTaskTitle = (title: string, taskId: string, todolistId: string) => {
+        console.log(title,taskId,todolistId)
        // const action = changeTaskTitleAC(title, taskId, todolistId);
         dispatch(changeTaskTC({title:title}, taskId, todolistId));
     }
-    return <div className={s.Container}>
+    return <>
+        <Grid container spacing={3}>
         {todolists.map((el) => {
             let allTodolistTasks = tasks[el.id]
-            return <TodolistItem key={el.id} todoListId={el.id} deleteTask={deleteTask} title={el.title}
+            return <Grid item key={el.id}>
+                <Paper style={{padding: '10px'}}>
+                    <TodolistItem key={el.id} todoListId={el.id} deleteTask={deleteTask} title={el.title}
                                  tasks={allTodolistTasks}
                                  onCreateItem={createTask}
                                  changeTitleTodolist={changeTitleTodolist}
                                  changeTaskTitle={changeTaskTitle}
                                  deleteTodoList={deleteTodoList}
             />
+                </Paper>
+                    </Grid>
         })}
-    </div>
+        </Grid>
+    </>
 }

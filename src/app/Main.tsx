@@ -5,6 +5,7 @@ import {addTodoListAC, createTodoListTC} from "../common/components/todoListRedu
 import {TodoLists} from "../features/todolists/ui/TodoLists/TodoLists";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {APITodoList} from "../features/todolists/api/APITodoList";
+import {Container, Grid} from "@mui/material";
 
 export const Main = () => {
     const dispatch = useAppDispatch();
@@ -12,10 +13,11 @@ export const Main = () => {
        dispatch(createTodoListTC(title))
     }
     return <>
-        <div className={s.WrapperBody}>
+        <Container fixed>
+        <Grid container style={{padding: '20px'}}>
             <AddItemForm onCreateItem={createTodolist}/>
-        </div>
-
+        </Grid>
         <TodoLists/>
+        </Container>
     </>
 }
