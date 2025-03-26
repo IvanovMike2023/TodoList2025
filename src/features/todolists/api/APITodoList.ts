@@ -43,6 +43,10 @@ export const APITask = {
     changeTask(model: UpdateTaskModelType, taskId: string, todolistId: string) {
         const promise = instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, model)
         return promise
+    },
+    setStatusTask( taskId: string, todolistId: string) {
+        const promise = instance.put(`/todo-lists/${todolistId}/tasks/${taskId}/reorder`)
+        return promise
     }
 }
 

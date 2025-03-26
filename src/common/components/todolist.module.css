@@ -5,10 +5,12 @@
 .TitleTodoList{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .TaskInput{
     display: flex;
     justify-content: center;
+
 }
 .TaskItemsWrap{
     list-style-type:none;

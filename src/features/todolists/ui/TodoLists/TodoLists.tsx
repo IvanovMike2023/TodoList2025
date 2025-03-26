@@ -2,7 +2,13 @@ import s from "../../../../app.module.css";
 import {TodolistItem} from "./TodoListItem/TodolistItem";
 import React, {useEffect, useState} from "react";
 import {changeTodoListTC, deleteTodoListTC, fetchTodolistsTC} from "../../../../common/components/todoListReducer";
-import {changeTaskTC, changeTaskTitleAC, createTaskTC, deleteTaskTC} from "../../../../common/components/taskReducer";
+import {
+    updateTaskTC,
+    updateTaskAC,
+    createTaskTC,
+    deleteTaskTC,
+    setStatusTaskTC
+} from "../../../../common/components/taskReducer";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
 import {Grid, Paper} from "@mui/material";
@@ -32,9 +38,10 @@ export const TodoLists = () => {
         dispatch(changeTodoListTC(title,todolistId))
     }
     const changeTaskTitle = (title: string, taskId: string, todolistId: string) => {
-        console.log(title,taskId,todolistId)
-       // const action = changeTaskTitleAC(title, taskId, todolistId);
-        dispatch(changeTaskTC({title:title}, taskId, todolistId));
+        dispatch(updateTaskTC({title:title}, taskId, todolistId));
+    }
+    const SetStatusTask=(status:number,taskId: string, todolistId: string)=>{
+        dispatch(updateTaskTC({status:status}, taskId, todolistId));
     }
     return <>
         <Grid container spacing={3}>
@@ -48,6 +55,7 @@ export const TodoLists = () => {
                                  changeTitleTodolist={changeTitleTodolist}
                                  changeTaskTitle={changeTaskTitle}
                                  deleteTodoList={deleteTodoList}
+                                  SetStatusTask={SetStatusTask}
             />
                 </Paper>
                     </Grid>
