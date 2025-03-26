@@ -10,7 +10,6 @@ import {
 } from "../../features/todolists/api/APITodoList";
 
 const initialState = {} as TasksState
-
 export const tasksReducer = (state: TasksState = initialState, action: ActionsType): TasksState => {
     switch (action.type) {
         case 'ADD-TASK':
@@ -95,8 +94,6 @@ export const updateTaskTC = (domainModel: UpdateDomainTaskModelType, taskId: str
         status: task.status,
         ...domainModel
     };
-    console.log(task.title)
-    console.log(domainModel)
     APITask.changeTask(apiModel, taskId, todolistId).then(res => {
         if (res.data.messages.length === 0) {
             dispatch(updateTaskAC(domainModel, taskId, todolistId))
