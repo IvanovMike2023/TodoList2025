@@ -13,7 +13,6 @@ type PropsTasksType = {
     title: string
     status: TaskStatuses
 }
-
 export const Tasks = (props: PropsTasksType) => {
     const deleteHandler = () => {
         props.deleteTask(props.taskId, props.todoListId)
