@@ -1,15 +1,17 @@
 import {AddItemForm} from "../../../../../common/components/AddItemForm/AddItemForm";
 import {Box, IconButton, Paper} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import {Tasks} from "./Tasks/Tasks";
 import {FilterButtonst} from "./FilterButtons/FilterButtonst";
 import {TaskStatuses, TaskType} from "../../../api/APITodoList";
 import {Editablespan} from "./Tasks/editablespan";
 import DeleteIcon from "@mui/icons-material/Delete";
 import s from "../../../../../common/components/todolist.module.css";
+import {FilterValuesType} from "../../../../../common/components/todoListReducer";
 
 type Props = {
     title: string,
+    filter: FilterValuesType,
     todoListId: string,
     deleteTask: (taskId: string, todolistId: string) => void
     onCreateItem: (title: string, id: string) => void
@@ -17,7 +19,8 @@ type Props = {
     changeTaskTitle: (title: string, taskId: string, todolistId: string) => void
     tasks: TaskType[]
     deleteTodoList: (todolislId: string) => void
-    SetStatusTask: (status: number,taskId: string, todolistId: string) => void
+    SetStatusTask: (status: number, taskId: string, todolistId: string) => void
+    SetFilterTask: (filter: FilterValuesType, todolistId: string) => void
 
 }
 export const TodolistItem = (props: Props) => {
@@ -30,16 +33,29 @@ export const TodolistItem = (props: Props) => {
     const deleteTitleTodolist = () => {
         props.deleteTodoList(props.todoListId)
     }
+    let CurrentTasks = props.tasks
+    if (props.filter === 'active') {
+        CurrentTasks = props.tasks.filter(fl => fl.status === 0)
+    }
+    if (props.filter === 'completed') {
+        CurrentTasks = props.tasks.filter(fl => fl.status === 2)
+    }
+    if (props.filter === 'all') {
+        CurrentTasks = props.tasks
+    }
+    const ButtonSetStatus = (status: FilterValuesType) => {
+        props.SetFilterTask(status, props.todoListId)
+    }
     return <>
         <div className={s.TitleTodoList}>
-        <Editablespan title={props.title} changeTaskTitle={changeTitleTodolist}/>
-        <IconButton color="primary"><DeleteIcon onClick={deleteTitleTodolist} color={'action'}/></IconButton>
+            <Editablespan title={props.title} changeTaskTitle={changeTitleTodolist}/>
+            <IconButton color="primary"><DeleteIcon onClick={deleteTitleTodolist} color={'action'}/></IconButton>
         </div>
         <AddItemForm onCreateItem={todolistHandler}/>
-        {props.tasks.map(el => <Tasks  key={el.id} title={el.title} taskId={el.id} status={el.status}
-                                      changeTaskTitle={props.changeTaskTitle} todoListId={props.todoListId}
+        {CurrentTasks.map(el => <Tasks key={el.id} title={el.title} taskId={el.id} status={el.status}
+                                       changeTaskTitle={props.changeTaskTitle} todoListId={props.todoListId}
                                        SetStatusTask={props.SetStatusTask}
-                                      deleteTask={props.deleteTask}/>)}
-        <FilterButtonst/>
+                                       deleteTask={props.deleteTask}/>)}
+        <FilterButtonst ButtonSetStatus={ButtonSetStatus} filter={props.filter} />
     </>
 }
