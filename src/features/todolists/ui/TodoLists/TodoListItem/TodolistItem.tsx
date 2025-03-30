@@ -37,6 +37,7 @@ export const TodolistItem = (props: Props) => {
     if (props.filter === 'active') {
         CurrentTasks = props.tasks.filter(fl => fl.status === 0)
     }
+
     if (props.filter === 'completed') {
         CurrentTasks = props.tasks.filter(fl => fl.status === 2)
     }
