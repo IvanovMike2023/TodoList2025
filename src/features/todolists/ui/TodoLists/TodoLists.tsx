@@ -11,6 +11,8 @@ import {createTaskTC, deleteTaskTC, updateTaskTC} from "../../../../common/compo
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
 import {Grid, Paper} from "@mui/material";
+import {APITodoList} from "../../api/APITodoList";
+import {log} from "util";
 
 export const TodoLists = () => {
     const todolists = useAppSelector(state => state.todolists)
@@ -18,7 +20,7 @@ export const TodoLists = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchTodolistsTC())
+         dispatch(fetchTodolistsTC())
     }, [])
     const deleteTodoList = (todolislId: string) => {
         dispatch(deleteTodoListTC(todolislId))
