@@ -18,7 +18,6 @@ export const FilterButtonst = (props: PropsType) => {
     const ButtonHandlerAll = () => {
         props.ButtonSetStatus('all')
     }
-    console.log(props.filter==='all')
     return <>
         <ButtonGroup className={s.ButtonWrap} color="secondary" aria-label="Medium-sized button group">
             <Button variant={'outlined'} style={props.filter==='all'? {backgroundColor: '#38f590'}:{}} color={"inherit"} key="All" onClick={ButtonHandlerAll}>All</Button>
