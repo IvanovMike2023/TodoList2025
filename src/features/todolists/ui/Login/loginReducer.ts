@@ -1,10 +1,10 @@
-import {AppDispatch} from "../../../app/store";
-import {APITodoList, TasksState} from "../../../features/todolists/api/APITodoList";
+import {AppDispatch} from "../../../../app/store";
+import {APITodoList, TasksState} from "../../api/APITodoList";
 
 type initStateType={
     isme: boolean
 }
-const initialState = {} as initStateType
+const initialState = {isme:false} as initStateType
 export const loginReducer=(state:initStateType=initialState,action:ActionType):initStateType=>{
     switch (action.type){
         case 'ME':
@@ -13,7 +13,7 @@ export const loginReducer=(state:initStateType=initialState,action:ActionType):i
             return state
     }
 }
-const meAC=(isme:boolean)=>({type:'ME',payload:{isme}}as const)
+export const meAC=(isme:boolean)=>({type:'ME',payload:{isme}}as const)
 export const meTC=()=>(dispatch: AppDispatch)=>{
     APITodoList.me().then(res => {
         console.log(res)

@@ -1,6 +1,8 @@
 import axios from "axios";
+import { AxiosRequestConfig } from "axios";
 
-const token = "b1881416-9845-4fb9-86c3-20876dbe64b0"
+
+const token = "112df879-5d1f-44d9-99fa-935e21815cd7"
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     headers: {
@@ -8,7 +10,12 @@ const instance = axios.create({
         "API-KEY": "a2bc24bd-0a71-4fa5-ad1c-5b343082cdb6"
     }
 });
+
 export const APITodoList = {
+    auth(email:string,password:string,rememberMe:boolean=true) {
+        const promise = instance.post(`/auth/login`,{email,password,rememberMe})
+        return promise
+    },
     getTodoList() {
         const promise = instance.get<GetTodoListResponse[]>(`/todo-lists`)
         return promise
