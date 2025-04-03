@@ -26,7 +26,9 @@ export default function Login() {
 
         const email =formData.get('email')as string
         const password=formData.get('password') as string
-        APITodoList.auth(email,password).then(res=>{
+        const result={email,password,rememberMe:true}
+        APITodoList.auth(result).then(res=>{
+            console.log(res)
             dispatch(meAC(true))
         })
     };
