@@ -13,6 +13,7 @@ const instance = axios.create({
 export type LoginArgs = Inputs & {
     captcha?: string
 }
+
 type Inputs={
     email:string,
     password:string,
