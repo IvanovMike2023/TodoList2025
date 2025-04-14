@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router"
 import {Main} from "../../app/Main";
-import Login from "../../features/todolists/ui/Login/Login";
 import {PageNotFound} from "../components/PageNotFound/PageNotFound";
+import {Login} from "../../features/todolists/ui/Login/Login";
 export const Path={
     Main:'/',
     Login:'login',

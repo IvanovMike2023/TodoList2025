@@ -14,7 +14,7 @@ const providers = [{ id: 'credentials', name: 'Email and Password' }];
 
 
 
-export default function Login() {
+export const  Login=()=> {
     const dispatch = useAppDispatch()
     const theme = useTheme();
     const isme = useAppSelector(state=>state.me.isme)
