@@ -33,7 +33,9 @@ export const deleteAuthTC=()=>(dispatch:AppDispatch)=>{
     })
 }
 export const AuthTC=(result:LoginArgs)=>(dispatch:AppDispatch)=>{
+
     APITodoList.auth(result).then(res=>{
+        debugger
         console.log("AUTH")
         console.log(result)
         console.log(res)

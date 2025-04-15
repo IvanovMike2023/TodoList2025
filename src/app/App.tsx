@@ -5,7 +5,7 @@ import {CssBaseline, ThemeProvider} from "@mui/material";
 import {getTheme} from "../common/theme/theme";
 import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
-import {changeThemeModeAC} from "../common/components/themeReducer";
+import {appSlice, changeThemeModeAC} from "./app-slice";
 import {selectThemeMode} from "./hooks/app-selectord";
 import {Routing} from "../common/routing/Routing";
 
@@ -23,7 +23,7 @@ function App() {
     const dispatch = useAppDispatch()
     const theme = getTheme(themeMode)
     const changeTheme = () => {
-        dispatch(changeThemeModeAC({
+        dispatch(appSlice.actions.changeThemeModeAC({
             themeMode: themeMode === 'light' ? 'dark' : 'light'
         }))
     }

@@ -2,7 +2,8 @@ import axios from "axios";
 import { AxiosRequestConfig } from "axios";
 
 
-const token = "aea06bd7-5b6b-454f-9161-719eb20f482d"
+const token = "6d3084a0-e3ca-4fae-84c0-cb24deaecd29"
+
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     headers: {

@@ -1,45 +1,19 @@
 import * as React from 'react';
-import {AppProvider} from '@toolpad/core/AppProvider';
-import {type AuthProvider, SignInPage} from '@toolpad/core/SignInPage';
-import {useTheme} from '@mui/material/styles';
+import {Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextField} from "@mui/material";
+import {useForm,Controller} from 'react-hook-form';
+import {inspect} from "util";
+import s from './Login.module.css';
 import {APITodoList} from "../../api/APITodoList";
-import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
-import {AuthTC, meAC} from "./loginReducer";
-import {ChangeEvent, useEffect, useState} from "react";
-import {Path} from "../../../../common/routing/Routing";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
+import {AuthTC} from "./loginReducer";
+import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
+import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-
-const providers = [{ id: 'credentials', name: 'Email and Password' }];
-
+import {Path} from "../../../../common/routing/Routing";
 
 
-export const  Login=()=> {
-    const dispatch=useAppDispatch()
-const [login,setlogin]=useState('')
-const [pass,setpass]=useState('sac')
-const handleLogin=(e:ChangeEvent<HTMLInputElement>)=>{
-    setlogin(e.target.value)
-}
-const handlePass=(e:ChangeEvent<HTMLInputElement>)=>{
-    setpass(e.target.value)
-}
-const Auth=()=>{
-    const result={
-        email:'ivanov.michail.2023@yandex.ru',
-        password:'linux20121989LINUX',
-        rememberMe:true
-    }
-    dispatch(AuthTC(result))
-}
-    return (
-             <div>
-                 <input type="text" value={login} onChange={handleLogin}/>
-                 <input type="text" value={pass} onChange={handlePass}/>
-                 <button onClick={Auth}>submit</button>
-             </div>
-    );
- }
+// const providers = [{ id: 'credentials', name: 'Email and Password' }];
+//
 // export const  Login=()=> {
 //     const dispatch = useAppDispatch()
 //     const theme = useTheme();
@@ -73,3 +47,62 @@ const Auth=()=>{
 //         // preview-end
 //     );
 // }
+export const Login = () => {
+    const isme = useAppSelector(state=>state.me.isme)
+    const dispatch = useAppDispatch()
+    const navigate=useNavigate()
+    console.log(isme)
+    const {
+        register,
+        handleSubmit,
+        reset,
+        control,
+        formState: { errors },
+    } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
+    const onsubmit=(data:Inputs)=>{
+        dispatch(AuthTC(data))
+        console.log(data)
+        reset()
+    }
+useEffect(()=>{
+    if(isme)
+        navigate(Path.Main)
+},[])
+    return (
+        <Grid container justifyContent={'center'}>
+            <form onSubmit={handleSubmit(onsubmit)}>
+            <FormControl>
+                <FormGroup>
+                    <TextField label="Email" margin="normal" error={!!errors.email}
+                        {...register('email',{
+                        required: 'Email is required',
+                        pattern: {
+                            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: 'Incorrect email address',
+                        },
+                    })}  />
+                    {errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}
+                    <TextField type="password" label="Password" margin="normal" {...register('password')} />
+                    <FormControlLabel
+                        label={'Remember me'}
+                        control={
+                            <Controller
+                                name={'rememberMe'}
+                                control={control}
+                                render={({ field: { value, ...rest } }) => <Checkbox {...rest} checked={value} />}
+                            />
+                        }
+                    />
+                    <input type="submit" />
+                    {/*...*/}
+                </FormGroup>
+            </FormControl>
+            </form>
+        </Grid>
+    )
+}
+type Inputs = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
