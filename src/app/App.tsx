@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import s from '../app.module.css'
 import {Header} from "../common/components/Header/Header";
 import {CssBaseline, ThemeProvider} from "@mui/material";
@@ -7,10 +7,7 @@ import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {changeThemeModeAC} from "../common/components/themeReducer";
 import {selectThemeMode} from "./hooks/app-selectord";
-import {meTC} from "../features/todolists/ui/Login/loginReducer";
-import {Main} from "./Main";
-import {Path, Routing} from "../common/routing/Routing";
-import {useNavigate} from "react-router-dom";
+import {Routing} from "../common/routing/Routing";
 
 type FilterValues = 'all' | 'ative'
 export type TodolistType = {

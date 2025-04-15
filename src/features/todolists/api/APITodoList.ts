@@ -2,7 +2,7 @@ import axios from "axios";
 import { AxiosRequestConfig } from "axios";
 
 
-const token = "34af76aa-d56b-48f1-807a-e3bea46ce597"
+const token = "aea06bd7-5b6b-454f-9161-719eb20f482d"
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     headers: {
@@ -10,19 +10,30 @@ const instance = axios.create({
         "API-KEY": "a2bc24bd-0a71-4fa5-ad1c-5b343082cdb6"
     }
 });
-export type LoginArgs = Inputs & {
-    captcha?: string
-}
-
-
-type Inputs={
+// export const instance = axios.create({
+//     baseURL: process.env.REACT_APP_BASE_URL,
+//     headers: {
+//         "API-KEY": process.env.REACT_APP_API_KEY,
+//     },
+// })
+// instance.interceptors.request.use(function (config) {
+//     config.headers["Authorization"] = `Bearer ${localStorage.getItem("sn-token")}`
+//
+//     return config
+// })
+export type LoginArgs={
     email:string,
     password:string,
-    rememberMe:boolean
+    rememberMe:boolean,
+    captcha?: string
 }
 export const APITodoList = {
     auth(payload: LoginArgs) {
-        const promise = instance.post(`/auth/login`,{payload})
+        const promise = instance.post(`/auth/login`,payload)
+        return promise
+    },
+    deleteauth() {
+        const promise = instance.delete(`/auth/login`)
         return promise
     },
     getTodoList() {

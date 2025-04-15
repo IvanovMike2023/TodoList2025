@@ -5,6 +5,8 @@ import {useAppSelector} from "../../../app/hooks/useAppSelector";
 import {selectThemeMode} from "../../../app/hooks/app-selectord";
 import {useNavigate} from "react-router-dom";
 import {Path} from "../../routing/Routing";
+import {deleteAuthTC} from "../../../features/todolists/ui/Login/loginReducer";
+import {useAppDispatch} from "../../../app/hooks/useAppDispatch";
 
 type PropsType={
     changeTheme:()=>void
@@ -12,13 +14,14 @@ type PropsType={
 
 export const Header =(props:PropsType)=>{
     const navigate=useNavigate()
-
+const dispatch=useAppDispatch()
     const themeMode = useAppSelector(selectThemeMode)
     const HandlechangeTheme=()=>{
         props.changeTheme()
     }
     const navigareto=()=>{
-               navigate(Path.Login)
+        dispatch(deleteAuthTC())
+              //navigate(Path.Login)
     }
     return     (<>
                 <div  className={themeMode=='dark'? s.HeadWrapperdark:s.HeadWrapperlight }  >
@@ -26,7 +29,7 @@ export const Header =(props:PropsType)=>{
         <div className={s.Login}>
             <div>
 
-                <button onClick={navigareto}>login</button>
+                <button onClick={navigareto}>exit</button>
                 <Switch  onChange={HandlechangeTheme} />
             </div>
         </div>
