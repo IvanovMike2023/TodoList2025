@@ -1,7 +1,7 @@
 import {tasksReducer} from "../common/components/task-slice";
 import {todolistsReducer} from "../common/components/todoList-slice";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {appReduser, appSlice} from "./app-slice";
+import {appReduser} from "./app-slice";
 import {loginReducer} from "../features/todolists/ui/Login/loginReducer";
 // объединение reducer'ов с помощью combineReducers
 const rootReducer = combineReducers({
