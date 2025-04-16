@@ -16,7 +16,6 @@ export const loginReducer=(state:initStateType=initialState,action:ActionType):i
 export const meAC=(isme:boolean)=>({type:'ME',payload:{isme}}as const)
 export const meTC=()=>(dispatch: AppDispatch)=>{
     APITodoList.me().then(res => {
-        console.log(res)
          if(res.data.resultCode===0){
          dispatch(meAC(true))
          }

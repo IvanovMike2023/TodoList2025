@@ -17,7 +17,6 @@ export const Main=()=>{
     useEffect(()=>{
         dispatch(meTC())
     },[])
-    console.log(isme)
 
     return(
     <Container fixed>

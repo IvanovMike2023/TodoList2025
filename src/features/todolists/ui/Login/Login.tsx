@@ -51,7 +51,6 @@ export const Login = () => {
     const isme = useAppSelector(state=>state.me.isme)
     const dispatch = useAppDispatch()
     const navigate=useNavigate()
-    console.log(isme)
     const {
         register,
         handleSubmit,

@@ -2,7 +2,7 @@ import axios from "axios";
 import { AxiosRequestConfig } from "axios";
 
 
-const token = "6d3084a0-e3ca-4fae-84c0-cb24deaecd29"
+const token = "38da18f6-71d4-4dbe-99d6-c9093d1a9a69"
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -11,17 +11,7 @@ const instance = axios.create({
         "API-KEY": "a2bc24bd-0a71-4fa5-ad1c-5b343082cdb6"
     }
 });
-// export const instance = axios.create({
-//     baseURL: process.env.REACT_APP_BASE_URL,
-//     headers: {
-//         "API-KEY": process.env.REACT_APP_API_KEY,
-//     },
-// })
-// instance.interceptors.request.use(function (config) {
-//     config.headers["Authorization"] = `Bearer ${localStorage.getItem("sn-token")}`
-//
-//     return config
-// })
+
 export type LoginArgs={
     email:string,
     password:string,

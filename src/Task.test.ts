@@ -1,6 +1,6 @@
-import {createTaskAC, tasksReducer, tasksSlice} from "./common/components/task-slice";
+import {tasksReducer, tasksSlice} from "./common/components/task-slice";
 import {nanoid} from "@reduxjs/toolkit";
-import {TaskPriorities, TaskStatuses, TaskType} from "./features/todolists/api/APITodoList";
+import {TaskPriorities, TaskStatuses} from "./features/todolists/api/APITodoList";
 
 test('should add task', () => {
     const todoListId1 = nanoid()

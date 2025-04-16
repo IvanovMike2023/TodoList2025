@@ -5,7 +5,7 @@ import {
     changeTodoListTC,
     deleteTodoListTC,
     fetchTodolistsTC,
-    FilterValuesType
+    FilterValuesType, todolistsSlice
 } from "../../../../common/components/todoList-slice";
 import {createTaskTC, deleteTaskTC, updateTaskTC} from "../../../../common/components/task-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
@@ -42,7 +42,7 @@ export const TodoLists = () => {
         dispatch(updateTaskTC({status:status}, taskId, todolistId));
     }
     const SetFilterTask=(filter:FilterValuesType, todolistId: string)=>{
-        dispatch(changeFilterTodoListAC({filter, todolistId}));
+        dispatch(todolistsSlice.actions.changeFilterTodoListAC({filter, todolistId}));
     }
     return <>
         <Grid container spacing={3}>
