@@ -12,10 +12,11 @@ export const todolistsSlice=createSlice({
          return   action.payload.map(tl => ({...tl,filter: 'all'}))
         }),
         addTodoListAC: creatore.reducer<{todoList: TodolistsType}>((state,action)=>{
-           state= [{...action.payload.todoList,filter:'all'}, ...state]
+          return [...state]
+            // state= [{...action.payload.todoList,filter:'all'}, ...state]
         }),
-        deleteTodoListAC: creatore.reducer<any>((state,action)=>{
-          state.filter(fl => fl.id !== action.payload.todolistId)
+        deleteTodoListAC: creatore.reducer<string>((state,action)=>{
+          state.filter(fl => fl.id !== action.payload)
         }),
         changeTitleTodoListAC: creatore.reducer<{title: string, todolistId: string}>((state,action)=>{
             state.map(el => el.id === action.payload.todolistId ? {...el, title: action.payload.title} : {...el})
@@ -65,12 +66,19 @@ export const {getTodoListAC,addTodoListAC, deleteTodoListAC, changeTitleTodoList
 // })
 
 //thuks
-export const fetchTodolistsTC = () =>
-    (dispatch: AppDispatch) => {
-        APITodoList.getTodoList().then((res) => {
-              dispatch(todolistsSlice.actions.getTodoListAC(res.data))
-            res.data.forEach((el:TodolistsType)=> dispatch(getTaskTC(el.id,)))
-        })
+export const fetchTodolistsTC =  () =>
+    async (dispatch: AppDispatch) => {
+
+       try {
+           const res = await APITodoList.getTodoList()
+           console.log(res.data)
+           dispatch(todolistsSlice.actions.getTodoListAC(res.data))
+           res.data.forEach((el:TodolistsType)=> dispatch(getTaskTC(el.id)))
+       }
+       catch (e){
+           console.log(e)
+       }
+
     }
 export const deleteTodoListTC = (todoListId: string) => (dispatch: AppDispatch) => {
     APITodoList.deleteTodoList(todoListId).then(res => {
@@ -82,6 +90,7 @@ export const deleteTodoListTC = (todoListId: string) => (dispatch: AppDispatch) 
 export const createTodoListTC = (title: string) => (dispatch: AppDispatch) => {
     APITodoList.createnNewTodoList(title).then(res => {
         dispatch(todolistsSlice.actions.addTodoListAC(res.data.data.item))
+        dispatch(fetchTodolistsTC())
     })
 }
 export const changeTodoListTC = (title: string, todolistId: string) => (dispatch: AppDispatch) => {
