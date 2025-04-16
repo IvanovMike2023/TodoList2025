@@ -3,7 +3,7 @@ import {AddItemForm} from "../common/components/AddItemForm/AddItemForm";
 import {TodoLists} from "../features/todolists/ui/TodoLists/TodoLists";
 import React, {useEffect} from "react";
 import {useAppSelector} from "./hooks/useAppSelector";
-import {createTodoListTC} from "../common/components/todoListReducer";
+import {createTodoListTC} from "../common/components/todoList-slice";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {meTC} from "../features/todolists/ui/Login/loginReducer";
 import {Login} from "../features/todolists/ui/Login/Login";

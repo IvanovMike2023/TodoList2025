@@ -1,4 +1,4 @@
-import {createTaskAC, tasksReducer,} from "./common/components/taskReducer";
+import {createTaskAC, tasksReducer, tasksSlice} from "./common/components/task-slice";
 import {nanoid} from "@reduxjs/toolkit";
 import {TaskPriorities, TaskStatuses, TaskType} from "./features/todolists/api/APITodoList";
 
@@ -21,7 +21,7 @@ test('should add task', () => {
                 order: 0,
                 priority: TaskPriorities.Low,
             }, {
-                id: "1",
+                id: "2",
                 title: "CSS",
                 status: TaskStatuses.New,
                 todoListId: "todolistId1",
@@ -33,7 +33,7 @@ test('should add task', () => {
                 order: 0,
                 priority: TaskPriorities.Low,
             }, {
-                id: "1",
+                id: "3",
                 title: "CSS",
                 status: TaskStatuses.New,
                 todoListId: "todolistId1",
@@ -45,7 +45,7 @@ test('should add task', () => {
                 order: 0,
                 priority: TaskPriorities.Low,
             }, {
-                id: "1",
+                id: "4",
                 title: "CSS",
                 status: TaskStatuses.New,
                 todoListId: "todolistId1",
@@ -60,7 +60,7 @@ test('should add task', () => {
 
         ], [todoListId2]: [
             {
-                id: "1",
+                id: "1323",
                 title: "CSS",
                 status: TaskStatuses.New,
                 todoListId: "todolistId1",
@@ -73,7 +73,7 @@ test('should add task', () => {
                 priority: TaskPriorities.Low,
             },
             {
-                id: "1",
+                id: "23",
                 title: "CSS",
                 status: TaskStatuses.New,
                 todoListId: "todolistId1",
@@ -88,18 +88,20 @@ test('should add task', () => {
         ]
     }
 
-    const endState = tasksReducer(Tasks, createTaskAC({
-        id: "1",
-        title: "CSS",
-        status: TaskStatuses.New,
-        todoListId: "todolistId1",
-        description: "",
-        startDate: "",
-        completed:true,
-        deadline: "",
-        addedDate: "",
-        order: 0,
-        priority: TaskPriorities.Low,
-    }, todoListId1))
+    const endState = tasksReducer(Tasks, tasksSlice.actions.createTaskAC({
+        task: {
+            id: "11",
+            title: "CSS",
+            status: TaskStatuses.New,
+            todoListId: "todolistId1",
+            description: "",
+            startDate: "",
+            completed: true,
+            deadline: "",
+            addedDate: "",
+            order: 0,
+            priority: TaskPriorities.Low,
+        }
+    }))
     expect(endState[todoListId1].length).toBe(5)
 })

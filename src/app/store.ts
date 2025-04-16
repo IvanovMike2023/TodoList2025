@@ -1,5 +1,5 @@
-import {tasksReducer} from "../common/components/taskReducer";
-import {todolistsReducer} from "../common/components/todoListReducer";
+import {tasksReducer} from "../common/components/task-slice";
+import {todolistsReducer} from "../common/components/todoList-slice";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import {appReduser, appSlice} from "./app-slice";
 import {loginReducer} from "../features/todolists/ui/Login/loginReducer";

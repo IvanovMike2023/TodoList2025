@@ -1,7 +1,7 @@
 import {Button, ButtonGroup} from "@mui/material";
 import s from "../../../../../../common/components/todolist.module.css";
 import React from "react";
-import {FilterValuesType} from "../../../../../../common/components/todoListReducer";
+import {FilterValuesType} from "../../../../../../common/components/todoList-slice";
 
 type PropsType = {
     ButtonSetStatus: (status: FilterValuesType) => void

@@ -6,8 +6,8 @@ import {
     deleteTodoListTC,
     fetchTodolistsTC,
     FilterValuesType
-} from "../../../../common/components/todoListReducer";
-import {createTaskTC, deleteTaskTC, updateTaskTC} from "../../../../common/components/taskReducer";
+} from "../../../../common/components/todoList-slice";
+import {createTaskTC, deleteTaskTC, updateTaskTC} from "../../../../common/components/task-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
 import {Grid, Paper} from "@mui/material";
@@ -42,7 +42,7 @@ export const TodoLists = () => {
         dispatch(updateTaskTC({status:status}, taskId, todolistId));
     }
     const SetFilterTask=(filter:FilterValuesType, todolistId: string)=>{
-        dispatch(changeFilterTodoListAC(filter,todolistId));
+        dispatch(changeFilterTodoListAC({filter, todolistId}));
     }
     return <>
         <Grid container spacing={3}>

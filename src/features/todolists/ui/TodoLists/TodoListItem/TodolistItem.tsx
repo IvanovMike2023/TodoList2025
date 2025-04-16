@@ -7,7 +7,7 @@ import {TaskStatuses, TaskType} from "../../../api/APITodoList";
 import {Editablespan} from "./Tasks/editablespan";
 import DeleteIcon from "@mui/icons-material/Delete";
 import s from "../../../../../common/components/todolist.module.css";
-import {FilterValuesType} from "../../../../../common/components/todoListReducer";
+import {FilterValuesType} from "../../../../../common/components/todoList-slice";
 
 type Props = {
     title: string,
