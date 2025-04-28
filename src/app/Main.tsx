@@ -5,12 +5,12 @@ import React, {useEffect} from "react";
 import {useAppSelector} from "./hooks/useAppSelector";
 import {createTodoListTC} from "../common/components/todoList-slice";
 import {useAppDispatch} from "./hooks/useAppDispatch";
-import {meTC} from "../features/todolists/ui/Login/loginReducer";
+import {meTC} from "../features/todolists/ui/Login/auth-slice";
 import {Login} from "../features/todolists/ui/Login/Login";
 
 export const Main=()=>{
     const dispatch = useAppDispatch()
-    const isme = useAppSelector(state=>state.me.isme)
+    const isme = useAppSelector(state=>state.auth.isme)
     const createTodolist = (title: string) => {
         dispatch(createTodoListTC(title))
     }

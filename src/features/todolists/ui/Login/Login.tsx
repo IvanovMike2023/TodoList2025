@@ -5,7 +5,7 @@ import {inspect} from "util";
 import s from './Login.module.css';
 import {APITodoList} from "../../api/APITodoList";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
-import {AuthTC} from "./loginReducer";
+import {AuthTC, loginTC} from "./auth-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
@@ -48,7 +48,7 @@ import {Path} from "../../../../common/routing/Routing";
 //     );
 // }
 export const Login = () => {
-    const isme = useAppSelector(state=>state.me.isme)
+    const isme = useAppSelector(state=>state.auth.isme)
     const dispatch = useAppDispatch()
     const navigate=useNavigate()
     const {
@@ -59,7 +59,8 @@ export const Login = () => {
         formState: { errors },
     } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
     const onsubmit=(data:Inputs)=>{
-        dispatch(AuthTC(data))
+        //dispatch(AuthTC(data))
+        dispatch(loginTC(data))
         console.log(data)
         reset()
     }

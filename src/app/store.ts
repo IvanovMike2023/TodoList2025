@@ -1,20 +1,16 @@
 import {tasksReducer} from "../common/components/task-slice";
 import {todolistsReducer} from "../common/components/todoList-slice";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {appReduser} from "./app-slice";
-import {loginReducer} from "../features/todolists/ui/Login/loginReducer";
-// объединение reducer'ов с помощью combineReducers
-const rootReducer = combineReducers({
-    tasks: tasksReducer,
-    todolists: todolistsReducer,
-    themeMode:appReduser,
-    me:loginReducer
-})
+import {appReducer} from "./app-slice";
+import {authReducer, authSlice} from "../features/todolists/ui/Login/auth-slice";
 // создание store
 export const store = configureStore({
-
-
-    reducer: rootReducer,
+    reducer: {
+        tasks: tasksReducer,
+        todolists: todolistsReducer,
+        themeMode:appReducer,
+        [authSlice.name]:authReducer
+    },
 })
 // автоматическое определение типа всего объекта состояния
 export type RootState = ReturnType<typeof store.getState>

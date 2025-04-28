@@ -5,7 +5,7 @@ import {useAppSelector} from "../../../app/hooks/useAppSelector";
 import {selectThemeMode} from "../../../app/hooks/app-selectord";
 import {useNavigate} from "react-router-dom";
 import {Path} from "../../routing/Routing";
-import {deleteAuthTC} from "../../../features/todolists/ui/Login/loginReducer";
+import {deleteAuthTC} from "../../../features/todolists/ui/Login/auth-slice";
 import {useAppDispatch} from "../../../app/hooks/useAppDispatch";
 
 type PropsType={
