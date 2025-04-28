@@ -10,14 +10,12 @@ const rootReducer = combineReducers({
     themeMode:appReduser,
     me:loginReducer
 })
-
 // создание store
 export const store = configureStore({
 
 
     reducer: rootReducer,
 })
-
 // автоматическое определение типа всего объекта состояния
 export type RootState = ReturnType<typeof store.getState>
 // автоматическое определение типа метода dispatch
