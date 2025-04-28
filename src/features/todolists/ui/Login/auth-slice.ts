@@ -3,10 +3,7 @@ import {APITodoList, LoginArgs, TasksState} from "../../api/APITodoList";
 import {asyncThunkCreator, buildCreateSlice, createSlice} from "@reduxjs/toolkit";
 
 export const createAppSlice = buildCreateSlice({creators: {asyncThunk: asyncThunkCreator}})
-type initStateType = {
-    isme: boolean
-}
-const initialStateAuth = {isme: false} as initStateType
+
 export const authSlice = createAppSlice({
     name: 'auth',
     initialState: {isme:false},
@@ -15,6 +12,7 @@ export const authSlice = createAppSlice({
         loginTC: create.asyncThunk(
             async (result: LoginArgs, {dispatch, rejectWithValue}) => {
                 try {
+                    debugger
                     const res = await APITodoList.auth(result)
                     console.log(res.data)
                     return {isme:true}
@@ -24,7 +22,7 @@ export const authSlice = createAppSlice({
             },
             {
                 fulfilled: (state, action) => {
-                    //state.isme = action.payload.isme
+                    state.isme = true
                 }
             }
         )
@@ -37,7 +35,9 @@ export const authSlice = createAppSlice({
 export const authReducer = authSlice.reducer
 export const {loginTC} = authSlice.actions
 export const meTC = () => (dispatch: AppDispatch) => {
+
     APITodoList.me().then(res => {
+        console.log(res)
         if (res.data.resultCode === 0) {
             // dispatch(meAC({isme:true}))
         } else console.log('you are not initialise')
