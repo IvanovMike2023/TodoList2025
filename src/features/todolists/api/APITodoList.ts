@@ -11,8 +11,6 @@ const instance = axios.create({
     }
 });
 
-
-
 export type LoginArgs={
     email:string,
     password:string,
