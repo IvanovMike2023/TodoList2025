@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const token = "4b6f31b2-fef5-42d5-81b7-b8fcbae5d6fa"
+const token = "6f371c1b-c914-49b9-9b56-377108becdb9"
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -20,7 +20,7 @@ export type LoginArgs={
 }
 export const APITodoList = {
     auth(payload: LoginArgs) {
-        const promise = instance.post(`/auth/login`,payload)
+        const promise = instance.post<BaseResponse<{userId:number,token:string}>>(`/auth/login`,payload)
         return promise
     },
     deleteauth() {
@@ -135,4 +135,14 @@ export type TodolistsType ={
     title: string,
     addedDate: string,
     order: number,
+}
+export type FieldError = {
+    error: string
+    field: string
+}
+export type BaseResponse<T = {}> = {
+    data: T
+    resultCode: number
+    messages: string[]
+    fieldsErrors: FieldError[]
 }

@@ -18,8 +18,6 @@ export type TodolistType = {
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
-
-
     const dispatch = useAppDispatch()
     const theme = getTheme(themeMode)
     const changeTheme = () => {
@@ -27,7 +25,6 @@ function App() {
             themeMode: themeMode === 'light' ? 'dark' : 'light'
         }))
     }
-
 
     return (
         <ThemeProvider theme={theme}>

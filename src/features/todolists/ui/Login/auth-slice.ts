@@ -1,45 +1,39 @@
 import {AppDispatch} from "../../../../app/store";
 import {APITodoList, LoginArgs, TasksState} from "../../api/APITodoList";
-import {asyncThunkCreator, buildCreateSlice, createSlice} from "@reduxjs/toolkit";
+import {DomainTodoType} from "../../../../common/components/todoList-slice";
+import {asyncThunkCreator, buildCreateSlice} from "@reduxjs/toolkit";
 
 export const createAppSlice = buildCreateSlice({creators: {asyncThunk: asyncThunkCreator}})
-
 export const authSlice = createAppSlice({
     name: 'auth',
-    initialState: {isme:false},
-    selectors: {selectIsLoggedIn: (state) => state.isme},
+    initialState: {IsLoggedIn:false},
+    selectors: {selectIsLoggedIn: (state) => state.IsLoggedIn},
     reducers: (create) => ({
         loginTC: create.asyncThunk(
             async (result: LoginArgs, {dispatch, rejectWithValue}) => {
                 try {
-                    debugger
                     const res = await APITodoList.auth(result)
-                    console.log(res.data)
-                    return {isme:true}
+                    return {IsLoggedIn:true}
                 } catch (er) {
-                    console.log(er)
+                  return   rejectWithValue(null)
                 }
             },
             {
                 fulfilled: (state, action) => {
-                    state.isme = true
-                }
+                    state.IsLoggedIn = action.payload.IsLoggedIn
+                },
             }
         )
-        // meAC: creatore.reducer<initStateType>((state,action)=>{
-        // state.isme=action.payload.isme /// ??????
-        // }),
     }),
 })
 
 export const authReducer = authSlice.reducer
 export const {loginTC} = authSlice.actions
 export const meTC = () => (dispatch: AppDispatch) => {
-
     APITodoList.me().then(res => {
         console.log(res)
         if (res.data.resultCode === 0) {
-            // dispatch(meAC({isme:true}))
+             //dispatch(meAC({isme:true}))
         } else console.log('you are not initialise')
     })
 }

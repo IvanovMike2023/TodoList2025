@@ -1,13 +1,11 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import {Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextField} from "@mui/material";
-import {useForm,Controller} from 'react-hook-form';
-import {inspect} from "util";
+import {Controller, useForm} from 'react-hook-form';
 import s from './Login.module.css';
-import {APITodoList} from "../../api/APITodoList";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
-import {AuthTC, loginTC} from "./auth-slice";
+import {loginTC} from "./auth-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
-import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {Path} from "../../../../common/routing/Routing";
 
@@ -48,7 +46,8 @@ import {Path} from "../../../../common/routing/Routing";
 //     );
 // }
 export const Login = () => {
-    const isme = useAppSelector(state=>state.auth.isme)
+    const isme = useAppSelector(state=>state.auth.IsLoggedIn)
+    console.log(isme)
     const dispatch = useAppDispatch()
     const navigate=useNavigate()
     const {
@@ -65,9 +64,10 @@ export const Login = () => {
         reset()
     }
 useEffect(()=>{
-    if(isme)
+    if(isme) {
         navigate(Path.Main)
-},[])
+    }
+},[isme])
     return (
         <Grid container justifyContent={'center'}>
             <form onSubmit={handleSubmit(onsubmit)}>

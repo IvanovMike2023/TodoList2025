@@ -10,7 +10,6 @@ import {Login} from "../features/todolists/ui/Login/Login";
 
 export const Main=()=>{
     const dispatch = useAppDispatch()
-    const isme = useAppSelector(state=>state.auth.isme)
     const createTodolist = (title: string) => {
         dispatch(createTodoListTC(title))
     }
@@ -20,15 +19,10 @@ export const Main=()=>{
 
     return(
     <Container fixed>
-
-        {isme? <>
             <Grid container style={{padding: '20px'}}>
                 <AddItemForm onCreateItem={createTodolist}/>
             </Grid>
             <TodoLists/>
-        </> : <Login/>}
-
-
     </Container>
     )
 
