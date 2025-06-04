@@ -1,15 +1,4 @@
-import axios from "axios";
-
-
-const token = "6f371c1b-c914-49b9-9b56-377108becdb9"
-
-const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    headers: {
-        "Authorization": `Bearer ${token}`,
-        "API-KEY": "a2bc24bd-0a71-4fa5-ad1c-5b343082cdb6"
-    }
-});
+import {instance} from "./instance";
 
 
 export type LoginArgs={

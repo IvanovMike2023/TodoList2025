@@ -2,6 +2,7 @@ import {AppDispatch} from "../../../../app/store";
 import {APITodoList, LoginArgs, TasksState} from "../../api/APITodoList";
 import {DomainTodoType} from "../../../../common/components/todoList-slice";
 import {asyncThunkCreator, buildCreateSlice} from "@reduxjs/toolkit";
+import {AUTH_TOKEN} from "../../../../common/constants";
 
 export const createAppSlice = buildCreateSlice({creators: {asyncThunk: asyncThunkCreator}})
 export const authSlice = createAppSlice({
@@ -13,6 +14,7 @@ export const authSlice = createAppSlice({
             async (result: LoginArgs, {dispatch, rejectWithValue}) => {
                 try {
                     const res = await APITodoList.auth(result)
+                    localStorage.setItem(AUTH_TOKEN,res.data.data.token)
                     return {IsLoggedIn:true}
                 } catch (er) {
                   return   rejectWithValue(null)
