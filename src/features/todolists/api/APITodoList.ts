@@ -7,7 +7,6 @@ export type LoginArgs={
     rememberMe:boolean,
     captcha?: string
 }
-
 export const APITodoList = {
     auth(payload: LoginArgs) {
         const promise = instance.post<BaseResponse<{userId:number,token:string}>>(`/auth/login`,payload)
