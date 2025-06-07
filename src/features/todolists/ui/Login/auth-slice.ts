@@ -45,7 +45,6 @@ export const authSlice = createAppSlice({
         ),
     }),
 })
-
 export const authReducer = authSlice.reducer
 export const {loginTC, logoutTC} = authSlice.actions
 export const meTC = () => (dispatch: AppDispatch) => {

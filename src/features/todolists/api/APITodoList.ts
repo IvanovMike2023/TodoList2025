@@ -13,7 +13,7 @@ export const APITodoList = {
         return promise
     },
     logout() {
-        const promise = instance.delete(`/auth/login`)
+        const promise = instance.delete<BaseResponse>(`/auth/login`)
         return promise
     },
     getTodoList() {
@@ -112,12 +112,6 @@ type GetTodoListResponse = {
     addedDate: string
     order: number
     title: string
-}
-type DeleteTodoListResponse = {
-    resultCode: number
-    messages: string
-    data: {}
-    fieldsErrors: []
 }
 export type TodolistsType ={
     id: string,

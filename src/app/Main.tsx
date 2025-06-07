@@ -16,7 +16,6 @@ export const Main = () => {
     const createTodolist = (title: string) => {
         dispatch(createTodoListTC(title))
     }
-    const navigate=useNavigate()
     const IsLoggedIn = useAppSelector(state=>state.auth.IsLoggedIn)
     console.log(IsLoggedIn)
     useEffect(() => {
