@@ -23,36 +23,35 @@ export const authSlice = createAppSlice({
             {
                 fulfilled: (state, action) => {
                     state.IsLoggedIn = action.payload.IsLoggedIn
-                },
+                }
             }
-        )
+        ),
+        logoutTC: create.asyncThunk(
+            async ( _, {dispatch, rejectWithValue}) => {
+                try {
+                    const res = await APITodoList.logout()
+                    console.log(res)
+                    localStorage.removeItem(AUTH_TOKEN)
+                    return {IsLoggedIn:false}
+                } catch (er) {
+                  return   rejectWithValue(null)
+                }
+            },
+            {
+                fulfilled: (state, action) => {
+                    state.IsLoggedIn = action.payload.IsLoggedIn
+                }
+            }
+        ),
     }),
 })
 
 export const authReducer = authSlice.reducer
-export const {loginTC} = authSlice.actions
+export const {loginTC, logoutTC} = authSlice.actions
 export const meTC = () => (dispatch: AppDispatch) => {
     APITodoList.me().then(res => {
-        console.log(res)
         if (res.data.resultCode === 0) {
-             //dispatch(meAC({isme:true}))
         } else console.log('you are not initialise')
     })
 }
-export const deleteAuthTC = () => (dispatch: AppDispatch) => {
-    APITodoList.deleteauth().then(res => {
-        console.log(res)
-        if (res.data.resultCode === 0) {
-            // dispatch(authSlice.actions.meAC({isme:false}))
-        } else console.log('you are not initialise')
-    })
-}
-export const AuthTC = (result: LoginArgs) => (dispatch: AppDispatch) => {
 
-    APITodoList.auth(result).then(res => {
-        console.log("AUTH")
-        console.log(result)
-        console.log(res)
-        // dispatch(meAC({isme:true}))
-    })
-}

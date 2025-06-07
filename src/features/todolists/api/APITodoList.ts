@@ -12,7 +12,7 @@ export const APITodoList = {
         const promise = instance.post<BaseResponse<{userId:number,token:string}>>(`/auth/login`,payload)
         return promise
     },
-    deleteauth() {
+    logout() {
         const promise = instance.delete(`/auth/login`)
         return promise
     },
