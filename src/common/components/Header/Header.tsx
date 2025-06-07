@@ -4,7 +4,7 @@ import {Switch} from "@mui/material";
 import {useAppSelector} from "../../../app/hooks/useAppSelector";
 import {selectThemeMode} from "../../../app/hooks/app-selectord";
 import {useAppDispatch} from "../../../app/hooks/useAppDispatch";
-import {logoutTC} from "../../../features/todolists/ui/Login/auth-slice";
+import {logoutTC, selectIsLoggedIn} from "../../../features/todolists/ui/Login/auth-slice";
 
 type PropsType={
     changeTheme:()=>void
@@ -19,7 +19,7 @@ const dispatch=useAppDispatch()
     const UnLogin=()=>{
         dispatch( logoutTC())
     }
-    const IsLoggedIn = useAppSelector(state=>state.auth.IsLoggedIn)
+    const IsLoggedIn = useAppSelector(selectIsLoggedIn)
 
     return     (<>
                 <div  className={themeMode=='dark'? s.HeadWrapperdark:s.HeadWrapperlight }  >

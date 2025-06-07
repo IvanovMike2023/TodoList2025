@@ -4,7 +4,7 @@ import {Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextField} fro
 import {Controller, useForm} from 'react-hook-form';
 import s from './Login.module.css';
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
-import {loginTC} from "./auth-slice";
+import {loginTC, selectIsLoggedIn} from "./auth-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useNavigate} from "react-router-dom";
 import {Path} from "../../../../common/routing/Routing";
@@ -46,8 +46,7 @@ import {Path} from "../../../../common/routing/Routing";
 //     );
 // }
 export const Login = () => {
-    const isme = useAppSelector(state=>state.auth.IsLoggedIn)
-    console.log(isme)
+    const IsLoggedIn = useAppSelector(selectIsLoggedIn)
     const dispatch = useAppDispatch()
     const navigate=useNavigate()
     const {
@@ -62,10 +61,10 @@ export const Login = () => {
         reset()
     }
 useEffect(()=>{
-    if(isme) {
+    if(IsLoggedIn) {
         navigate(Path.Main)
     }
-},[isme])
+},[IsLoggedIn])
     return (
         <Grid container justifyContent={'center'}>
             <form onSubmit={handleSubmit(onsubmit)}>

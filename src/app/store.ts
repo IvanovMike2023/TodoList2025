@@ -8,8 +8,8 @@ export const store = configureStore({
     reducer: {
         tasks: tasksReducer,
         todolists: todolistsReducer,
-        themeMode:appReducer,
-        [authSlice.name]:authReducer
+        themeMode: appReducer,
+        [authSlice.name]: authReducer
     },
 })
 // автоматическое определение типа всего объекта состояния

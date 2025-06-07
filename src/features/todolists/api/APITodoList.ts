@@ -33,7 +33,7 @@ export const APITodoList = {
         return promise
     },
     me() {
-        const promise = instance.get(`/auth/me`)
+        const promise = instance.get<BaseResponse<meResponse>>(`/auth/me`)
         return promise
     }
 }
@@ -122,6 +122,11 @@ export type TodolistsType ={
 export type FieldError = {
     error: string
     field: string
+}
+type meResponse={
+    id: number
+    email: string
+    login: string
 }
 export type BaseResponse<T = {}> = {
     data: T
