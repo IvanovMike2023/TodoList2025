@@ -1,10 +1,9 @@
-import {AppDispatch} from "../../../../app/store";
 import {APITodoList, LoginArgs} from "../../api/APITodoList";
 import {asyncThunkCreator, buildCreateSlice} from "@reduxjs/toolkit";
 import {AUTH_TOKEN} from "../../../../common/constants";
 import {ResultCode} from "../../../../common/enums";
+import {createAppSlice} from "../../../../common/utils/createAppSlice";
 
-export const createAppSlice = buildCreateSlice({creators: {asyncThunk: asyncThunkCreator}})
 export const authSlice = createAppSlice({
     name: 'auth',
     initialState: {IsLoggedIn: false},
@@ -52,10 +51,10 @@ export const authSlice = createAppSlice({
                         console.log(res)
                         res.data.messages[0]='sssssss'
                         return {IsLoggedIn: false}
-
                     }
 
                 } catch (er) {
+                    console.log(er)
                     return rejectWithValue(null)
                 }
             },

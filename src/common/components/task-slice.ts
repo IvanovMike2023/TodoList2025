@@ -9,7 +9,8 @@ import {
     UpdateTaskModelType
 } from "../../features/todolists/api/APITodoList";
 import {createSlice} from "@reduxjs/toolkit";
-export const tasksSlice=createSlice({
+import {createAppSlice} from "../utils/createAppSlice";
+export const tasksSlice=createAppSlice({
     name: 'tasks',
     initialState: {} as TasksState ,
     reducers: (creatore)=>({

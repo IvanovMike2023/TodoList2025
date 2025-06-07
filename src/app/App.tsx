@@ -21,7 +21,8 @@ function App() {
         }))
     }
     useEffect(() => {
-        dispatch(meTC()).then(() => setisInit(true))
+        dispatch(meTC()).unwrap()
+            .finally(() => setisInit(true))
     }, [])
 
     return (

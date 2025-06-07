@@ -1,10 +1,10 @@
-import {createSlice} from "@reduxjs/toolkit";
 import {AppDispatch} from "../../app/store";
 import {APITodoList, TodolistsType} from "../../features/todolists/api/APITodoList";
 import {getTaskTC} from "./task-slice";
+import {createAppSlice} from "../utils/createAppSlice";
 
 const initialState: DomainTodoType[] = []
-export const todolistsSlice = createSlice({
+export const todolistsSlice = createAppSlice({
     name: 'todolist',
     initialState: initialState,
     reducers: (creatore) => ({
@@ -13,7 +13,6 @@ export const todolistsSlice = createSlice({
         }),
         addTodoListAC: creatore.reducer<{ todoList: TodolistsType }>((state, action) => {
             return [...state]
-            // state= [{...action.payload.todoList,filter:'all'}, ...state]
         }),
         deleteTodoListAC: creatore.reducer<string>((state, action) => {
             state.filter(fl => fl.id !== action.payload)
