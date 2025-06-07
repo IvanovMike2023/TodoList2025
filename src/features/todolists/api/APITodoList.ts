@@ -1,6 +1,4 @@
 import {instance} from "./instance";
-
-
 export type LoginArgs={
     email:string,
     password:string,
