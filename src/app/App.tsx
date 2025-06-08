@@ -6,13 +6,16 @@ import {getTheme} from "../common/theme/theme";
 import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {appSlice, changeThemeModeAC} from "./app-slice";
-import {selectThemeMode} from "./hooks/app-selectord";
+import {selectProgressMode, selectThemeMode} from "./hooks/app-selectord";
 import {Routing} from "../common/routing/Routing";
 import {meTC} from "../features/todolists/ui/Login/auth-slice";
 import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
+import LineProgress from "../common/utils/LineProgress/LineProgress";
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
+    const progress = useAppSelector(selectProgressMode)
+    console.log(progress)
     const [isInit, setisInit] = useState(false)
     const dispatch = useAppDispatch()
     const theme = getTheme(themeMode)
@@ -31,6 +34,7 @@ function App() {
             <CssBaseline/>
             <div className={s.AppContainer}>
                 <Header changeTheme={changeTheme}/>
+                {progress==='success' ? <></> : <LineProgress />}
                 {isInit ? <Routing/> : <Box className={s.progress}><CircularProgress color={'info'} size={100}/></Box>}
             </div>
             <ErrorSnackBar/>

@@ -3,6 +3,7 @@ import {asyncThunkCreator, buildCreateSlice} from "@reduxjs/toolkit";
 import {AUTH_TOKEN} from "../../../../common/constants";
 import {ResultCode} from "../../../../common/enums";
 import {createAppSlice} from "../../../../common/utils/createAppSlice";
+import {setAppProgressAC} from "../../../../app/app-slice";
 
 export const authSlice = createAppSlice({
     name: 'auth',
@@ -43,9 +44,11 @@ export const authSlice = createAppSlice({
         ),
         meTC: create.asyncThunk(
             async (_, {dispatch, rejectWithValue}) => {
+                dispatch(setAppProgressAC({progress:'loading'}))
                 try {
                     const res = await APITodoList.me()
                     if (res.data.resultCode===ResultCode.Success){
+                        dispatch(setAppProgressAC({progress:'success'}))
                         return {IsLoggedIn: true}
                     }else {
                         console.log(res)
