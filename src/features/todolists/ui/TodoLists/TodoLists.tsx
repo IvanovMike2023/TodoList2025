@@ -10,7 +10,7 @@ import {
 import {createTaskTC, deleteTaskTC, updateTaskTC} from "../../../../common/components/task-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
-import {Grid, Paper} from "@mui/material";
+import {Alert, Grid, Paper} from "@mui/material";
 import {APITodoList} from "../../api/APITodoList";
 import {log} from "util";
 
@@ -26,20 +26,19 @@ export const TodoLists = () => {
         dispatch(deleteTodoListTC(todolislId))
     }
     const deleteTask = ( taskId: string,todolistId: string) => {
-        dispatch(deleteTaskTC(taskId,todolistId))
+        dispatch(deleteTaskTC({taskId, todolistId}))
     }
     const createTask = (title: string, todolistId: string) => {
-        dispatch(createTaskTC(title,todolistId))
-       /// setTasks({...tasks})
+        dispatch(createTaskTC({title, todolistId}))
     }
     const changeTitleTodolist = (title: string, todolistId: string) => {
         dispatch(changeTodoListTC(title,todolistId))
     }
     const changeTaskTitle = (title: string, taskId: string, todolistId: string) => {
-        dispatch(updateTaskTC({title:title}, taskId, todolistId));
+        dispatch(updateTaskTC( {taskId:taskId, todolistId:todolistId,domainModel:{title}}));
     }
     const SetStatusTask=(status:number,taskId: string, todolistId: string)=>{
-        dispatch(updateTaskTC({status:status}, taskId, todolistId));
+        dispatch(updateTaskTC({ taskId:taskId, todolistId:todolistId,domainModel:{status:status}}));
     }
     const SetFilterTask=(filter:FilterValuesType, todolistId: string)=>{
         dispatch(todolistsSlice.actions.changeFilterTodoListAC({filter, todolistId}));

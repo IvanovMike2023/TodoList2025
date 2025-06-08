@@ -9,6 +9,7 @@ import {appSlice, changeThemeModeAC} from "./app-slice";
 import {selectThemeMode} from "./hooks/app-selectord";
 import {Routing} from "../common/routing/Routing";
 import {meTC} from "../features/todolists/ui/Login/auth-slice";
+import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
@@ -32,6 +33,7 @@ function App() {
                 <Header changeTheme={changeTheme}/>
                 {isInit ? <Routing/> : <Box className={s.progress}><CircularProgress color={'info'} size={100}/></Box>}
             </div>
+            <ErrorSnackBar/>
         </ThemeProvider>
     );
 }

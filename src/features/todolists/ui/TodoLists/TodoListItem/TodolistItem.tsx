@@ -1,5 +1,5 @@
 import {AddItemForm} from "../../../../../common/components/AddItemForm/AddItemForm";
-import {Box, IconButton, Paper} from "@mui/material";
+import {Alert, Box, IconButton, Paper} from "@mui/material";
 import React, {useState} from "react";
 import {Tasks} from "./Tasks/Tasks";
 import {FilterButtonst} from "./FilterButtons/FilterButtonst";
@@ -58,5 +58,6 @@ export const TodolistItem = (props: Props) => {
                                        SetStatusTask={props.SetStatusTask}
                                        deleteTask={props.deleteTask}/>)}
         <FilterButtonst ButtonSetStatus={ButtonSetStatus} filter={props.filter} />
+
     </>
 }

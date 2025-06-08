@@ -37,24 +37,23 @@ export const APITodoList = {
 }
 
 export const APITask = {
-    getTodoList(todolistId: string) {
+    getTask(todolistId: string) {
         const promise = instance.get(`/todo-lists/${todolistId}/tasks`)
         return promise
     },
-    createnNewTask(title: string, todolistId: string) {
-        const promise = instance.post(`/todo-lists/${todolistId}/tasks`, {title})
+    createnNewTask(payload:{title: string, todolistId: string}) {
+        const { todolistId, title } = payload
+        const promise = instance.post<BaseResponse <{item:TaskType}>>(`/todo-lists/${todolistId}/tasks`, {title})
         return promise
     },
     deleteTask(taskId: string, todolistId: string) {
+        console.log(todolistId)
         const promise = instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`)
         return promise
     },
-    changeTask(model: UpdateTaskModelType, taskId: string, todolistId: string) {
-        const promise = instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, model)
-        return promise
-    },
-    setStatusTask( taskId: string, todolistId: string) {
-        const promise = instance.put(`/todo-lists/${todolistId}/tasks/${taskId}/reorder`)
+    changeTask(payload:{apiModel: UpdateTaskModelType, taskId: string, todolistId: string}) {
+        const{apiModel, taskId, todolistId}=payload
+        const promise = instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, apiModel)
         return promise
     }
 }
@@ -76,34 +75,34 @@ export enum TaskPriorities {
 }
 
 export type UpdateTaskModelType = {
-    deadline: string;
-    description: any;
-    priority: TaskPriorities;
-    startDate: string;
-    status: TaskStatuses;
+    deadline: string | null
+    description: any
+    priority: TaskPriorities
+    startDate: string
+    status: TaskStatuses
     title: string;
-};
+}
 
 export type TaskType = {
-    description: string;
-    title: string;
-    status: TaskStatuses;
-    priority: TaskPriorities;
-    startDate: string;
-    deadline: string;
-    id: string;
-    todoListId: string;
-    order: number;
-    completed: boolean;
-    addedDate: string;
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    completed: boolean
+    addedDate: string
 }
 export type TasksState = {
     [key: string]: TaskType[]
 }
 export type ResponseType<D = {}> = {
     resultCode: number;
-    messages: Array<string>;
-    data: D;
+    messages: Array<string>
+    data: D
 }
 type GetTodoListResponse = {
     id: string
