@@ -5,6 +5,7 @@ import {ResultCode} from "../../../../common/enums";
 import {createAppSlice} from "../../../../common/utils/createAppSlice";
 import {setAppErrorAC, setAppProgressAC} from "../../../../app/app-slice";
 import {handleError} from "../../../../common/utils/handleError/handleError";
+import {handleNetworkError} from "../../../../common/utils/handleError/handleNetworkError";
 
 export const authSlice = createAppSlice({
     name: 'auth',
@@ -55,7 +56,8 @@ export const authSlice = createAppSlice({
                         handleError(res.data,dispatch)
                         return {IsLoggedIn: false}
                     }
-                } catch (er) {
+                } catch (er:any) {
+                    handleNetworkError(er,dispatch)
                     return rejectWithValue(null)
                 }
             },

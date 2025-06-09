@@ -1,10 +1,35 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+
 import {instance} from "./instance";
+import {AUTH_TOKEN} from "@/common/constants";
 export type LoginArgs={
     email:string,
     password:string,
     rememberMe:boolean,
     captcha?: string
 }
+
+
+export const _APITodoList = createApi({
+    reducerPath: 'todolistsApi',
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_BASE_URL,
+        prepareHeaders: (headers) => {
+            headers.set("API-KEY", import.meta.env.VITE_API_KEY)
+            headers.set("Authorization", `Bearer ${localStorage.getItem(AUTH_TOKEN)}`)
+        },
+    }),
+    endpoints: (build) => ({
+        getTodolists: build.query<any[], void>({
+            query: () => "todo-lists",
+        }),
+    }),
+})
+
+// `createApi` создает объект `API`, который содержит все эндпоинты в виде хуков,
+// определенные в свойстве `endpoints`
+export const { useGetTodolistsQuery } = _APITodoList
+
 export const APITodoList = {
     auth(payload: LoginArgs) {
         const promise = instance.post<BaseResponse<{userId:number,token:string}>>(`/auth/login`,payload)

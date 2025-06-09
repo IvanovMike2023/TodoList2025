@@ -1,7 +1,6 @@
 import {Container, Grid} from "@mui/material";
 import {AddItemForm} from "../common/components/AddItemForm/AddItemForm";
 import {TodoLists} from "../features/todolists/ui/TodoLists/TodoLists";
-import React from "react";
 import {createTodoListTC} from "../common/components/todoList-slice";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 

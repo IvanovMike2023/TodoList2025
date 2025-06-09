@@ -1,36 +1,42 @@
-import {Checkbox, IconButton} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import React, {ChangeEvent} from "react";
-import {Editablespan} from "./editablespan";
-import {TaskStatuses} from "../../../../api/APITodoList";
+import { useEffect } from "react"
+import { TaskItem } from "./TaskItem/TaskItem"
+import List from "@mui/material/List"
+import {useAppSelector} from "@/app/hooks/useAppSelector";
+import {useAppDispatch} from "@/app/hooks/useAppDispatch";
+import {getTaskTC} from "@/common/components/task-slice";
+import {DomainTodolist} from "@/common/components/todoList-slice";
 
-type PropsTasksType = {
-    deleteTask: (taskId: string, todolistId: string) => void
-    SetStatusTask: (status: number, taskId: string, todolistId: string) => void
-    changeTaskTitle: (title: string, taskId: string, todolistId: string) => void
-    todoListId: string,
-    taskId: string
-    title: string
-    status: TaskStatuses
-}
-export const Tasks = (props: PropsTasksType) => {
-    const deleteHandler = () => {
-        props.deleteTask(props.taskId, props.todoListId)
-    }
-    const ChangeTaskTitleHandler = (newtitle: string) => {
-        props.changeTaskTitle(newtitle, props.taskId, props.todoListId)
-    }
-    const CheckTaskItemHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const status = e.target.checked ? TaskStatuses.Completed : TaskStatuses.New
-        props.SetStatusTask(status, props.taskId, props.todoListId)
-    }
-    return <div>
-        <Checkbox checked={props.status === TaskStatuses.Completed} onChange={CheckTaskItemHandler}/>
-        <Editablespan title={props.title} changeTaskTitle={ChangeTaskTitleHandler}/>
-        <IconButton onClick={deleteHandler} color="primary"><DeleteIcon style={{width: '20px'}}
-                                                                        color={'action'}/></IconButton>
-    </div>
-
+type Props = {
+    todolist: DomainTodolist
 }
 
+export const Tasks = ({ todolist }: Props) => {
+   // console.log(todolist)
+    const { id, filter } = todolist
 
+    const tasks = useAppSelector((state)=>state.tasks )
+    const dispatch = useAppDispatch()
+
+    const todolistTasks = tasks[id]
+    let filteredTasks = todolistTasks
+    if (filter === "active") {
+        filteredTasks = todolistTasks.filter((task) => task.status === 0)
+    }
+    if (filter === "completed") {
+        filteredTasks = todolistTasks.filter((task) => task.status === 2)
+    }
+
+    useEffect(() => {
+        dispatch(getTaskTC(id))
+    }, [])
+
+    return (
+        <>
+            {filteredTasks?.length === 0 ? (
+                <p>Тасок нет</p>
+            ) : (
+                <List>{filteredTasks?.map((task) => <TaskItem key={task.id} task={task} todolist={todolist} />)}</List>
+            )}
+        </>
+    )
+}

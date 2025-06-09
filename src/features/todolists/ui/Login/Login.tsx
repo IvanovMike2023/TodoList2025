@@ -6,8 +6,8 @@ import s from './Login.module.css';
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
 import {loginTC, selectIsLoggedIn} from "./auth-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
-import {useNavigate} from "react-router-dom";
 import {Path} from "../../../../common/routing/Routing";
+import {useNavigate} from "react-router";
 
 
 // const providers = [{ id: 'credentials', name: 'Email and Password' }];

@@ -12,7 +12,7 @@ import {meTC} from "../features/todolists/ui/Login/auth-slice";
 import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
 import LineProgress from "../common/utils/LineProgress/LineProgress";
 
-function App() {
+export function App() {
     const themeMode = useAppSelector(selectThemeMode)
     const progress = useAppSelector(selectProgressMode)
     const [isInit, setisInit] = useState(false)

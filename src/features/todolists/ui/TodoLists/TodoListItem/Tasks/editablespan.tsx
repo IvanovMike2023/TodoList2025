@@ -4,7 +4,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 export const Editablespan = (props: { title: string, changeTaskTitle: (newtitle: string,) => void }) => {
     const [edit, setEdit] = useState(false)
     const [newtitle, setTitle] = useState(props.title)
-
+    const r =props.title
     const OnTaskTitleHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setEdit(true)
     }

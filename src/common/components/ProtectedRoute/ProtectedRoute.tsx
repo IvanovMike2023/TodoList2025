@@ -1,6 +1,6 @@
-import {Navigate, Outlet} from "react-router-dom";
 import {Path} from "../../routing/Routing";
 import React, {ReactNode} from "react";
+import {Navigate, Outlet} from "react-router";
 
 type Props={
     children?:ReactNode,

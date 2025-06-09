@@ -3,7 +3,7 @@ import {APITodoList, TodolistsType} from "../../features/todolists/api/APITodoLi
 import {getTaskTC} from "./task-slice";
 import {createAppSlice} from "../utils/createAppSlice";
 
-const initialState: DomainTodoType[] = []
+const initialState: DomainTodolist[] = []
 export const todolistsSlice = createAppSlice({
     name: 'todolist',
     initialState: initialState,
@@ -12,6 +12,7 @@ export const todolistsSlice = createAppSlice({
             return action.payload.map(tl => ({...tl, filter: 'all'}))
         }),
         addTodoListAC: creatore.reducer<{ todoList: TodolistsType }>((state, action) => {
+            debugger
             return [...state]
         }),
         deleteTodoListAC: creatore.reducer<string>((state, action) => {
@@ -39,6 +40,7 @@ export const fetchTodolistsTC = () =>
         try {
             const res = await APITodoList.getTodoList()
             dispatch(todolistsSlice.actions.getTodoListAC(res.data))
+            console.log(res)
             res.data.forEach((el: TodolistsType) => dispatch(getTaskTC(el.id)))
         } catch (e) {
             console.log(e)
@@ -67,4 +69,4 @@ export const changeTodoListTC = (title: string, todolistId: string) => (dispatch
 }
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
-export type DomainTodoType = TodolistsType & { filter: FilterValuesType }
+export type DomainTodolist = TodolistsType & { filter: FilterValuesType }

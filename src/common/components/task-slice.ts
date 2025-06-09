@@ -39,6 +39,7 @@ export const tasksSlice = createAppSlice({
         getTaskTC: create.asyncThunk(
             async (todolistId: string, {dispatch, rejectWithValue}) => {
                 try {
+                    //console.log(todolistId)
                     const res = await APITask.getTask(todolistId)
                     const task = res.data.items
                     return {todolistId, task}
