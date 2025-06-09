@@ -1,5 +1,5 @@
 import {createAppSlice} from "@/common/utils/createAppSlice";
-import {APITodoList} from "@/features/todolists/api/APITodoList";
+import {APITodoList, TodolistsType} from "@/features/todolists/api/APITodoList";
 
 export const todolistsSlice = createAppSlice({
     name: "todolist",
@@ -188,6 +188,8 @@ export type DomainTodolist = Todolist & {
 //         todolistId
 //     })))
 // }
+export type RequestStatus = "idle" | "loading" | "succeeded" | "failed"
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
-export type DomainTodolist = TodolistsType & { filter: FilterValuesType }
+export type DomainTodolist = TodolistsType & { filter: FilterValuesType
+    entityStatus: RequestStatus }

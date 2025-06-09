@@ -1,11 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 
 import {instance} from "./instance";
 import {AUTH_TOKEN} from "@/common/constants";
-export type LoginArgs={
-    email:string,
-    password:string,
-    rememberMe:boolean,
+import {DomainTodolist} from "@/common/components/todoList-slice";
+
+export type LoginArgs = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
     captcha?: string
 }
 
@@ -20,8 +22,11 @@ export const APITodoList = createApi({
         },
     }),
     endpoints: (build) => ({
-        getTodolists: build.query<any[], void>({
+        getTodolists: build.query<DomainTodolist[], void>({
             query: () => "todo-lists",
+            transformResponse: (todolists: TodolistsType[]): DomainTodolist[] =>
+                todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'}))
+
         }),
     }),
 })
@@ -32,11 +37,11 @@ export const APITodoList = createApi({
 // }
 // `createApi` создает объект `API`, который содержит все эндпоинты в виде хуков,
 // определенные в свойстве `endpoints`
-export const { useGetTodolistsQuery } = APITodoList
+export const {useGetTodolistsQuery} = APITodoList
 
 export const _APITodoList = {
     auth(payload: LoginArgs) {
-        const promise = instance.post<BaseResponse<{userId:number,token:string}>>(`/auth/login`,payload)
+        const promise = instance.post<BaseResponse<{ userId: number, token: string }>>(`/auth/login`, payload)
         return promise
     },
     logout() {
@@ -74,10 +79,10 @@ export const APITask = {
         const promise = instance.get(`/todo-lists/${todolistId}/tasks`)
         return promise
     },
-    createnNewTask(payload:{title: string, todolistId: string}) {
-        const { todolistId, title } = payload
+    createnNewTask(payload: { title: string, todolistId: string }) {
+        const {todolistId, title} = payload
         console.log(payload)
-        const promise = instance.post<BaseResponse <{item:TaskType}>>(`/todo-lists/${todolistId}/tasks`, {title})
+        const promise = instance.post<BaseResponse<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
         return promise
     },
     deleteTask(taskId: string, todolistId: string) {
@@ -85,8 +90,8 @@ export const APITask = {
         const promise = instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`)
         return promise
     },
-    changeTask(payload:{apiModel: UpdateTaskModelType, taskId: string, todolistId: string}) {
-        const{apiModel, taskId, todolistId}=payload
+    changeTask(payload: { apiModel: UpdateTaskModelType, taskId: string, todolistId: string }) {
+        const {apiModel, taskId, todolistId} = payload
         const promise = instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, apiModel)
         return promise
     }
@@ -144,7 +149,7 @@ type GetTodoListResponse = {
     order: number
     title: string
 }
-export type TodolistsType ={
+export type TodolistsType = {
     id: string,
     title: string,
     addedDate: string,
@@ -154,7 +159,7 @@ export type FieldError = {
     error: string
     field: string
 }
-type meResponse={
+type meResponse = {
     id: number
     email: string
     login: string
