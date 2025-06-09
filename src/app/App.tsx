@@ -15,7 +15,6 @@ import LineProgress from "../common/utils/LineProgress/LineProgress";
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
     const progress = useAppSelector(selectProgressMode)
-    console.log(progress)
     const [isInit, setisInit] = useState(false)
     const dispatch = useAppDispatch()
     const theme = getTheme(themeMode)

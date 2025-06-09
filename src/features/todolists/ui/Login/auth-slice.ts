@@ -3,7 +3,8 @@ import {asyncThunkCreator, buildCreateSlice} from "@reduxjs/toolkit";
 import {AUTH_TOKEN} from "../../../../common/constants";
 import {ResultCode} from "../../../../common/enums";
 import {createAppSlice} from "../../../../common/utils/createAppSlice";
-import {setAppProgressAC} from "../../../../app/app-slice";
+import {setAppErrorAC, setAppProgressAC} from "../../../../app/app-slice";
+import {handleError} from "../../../../common/utils/handleError/handleError";
 
 export const authSlice = createAppSlice({
     name: 'auth',
@@ -51,13 +52,10 @@ export const authSlice = createAppSlice({
                         dispatch(setAppProgressAC({progress:'success'}))
                         return {IsLoggedIn: true}
                     }else {
-                        console.log(res)
-                        res.data.messages[0]='sssssss'
+                        handleError(res.data,dispatch)
                         return {IsLoggedIn: false}
                     }
-
                 } catch (er) {
-                    console.log(er)
                     return rejectWithValue(null)
                 }
             },
