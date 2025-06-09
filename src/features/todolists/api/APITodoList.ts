@@ -28,6 +28,13 @@ export const APITodoList = createApi({
                 todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'}))
 
         }),
+        createnNewTodoList: build.mutation<BaseResponse<{item:TodolistsType}>,string>({
+            query: (title)=>({
+                url:"/todo-lists",
+                method:"POST",
+                body:{title}
+            })
+        })
     }),
 })
 
@@ -37,7 +44,7 @@ export const APITodoList = createApi({
 // }
 // `createApi` создает объект `API`, который содержит все эндпоинты в виде хуков,
 // определенные в свойстве `endpoints`
-export const {useGetTodolistsQuery} = APITodoList
+export const {useGetTodolistsQuery,useLazyTodolistsQuery,useCreatenNewTodoListMutation} = APITodoList
 
 export const _APITodoList = {
     auth(payload: LoginArgs) {
@@ -71,6 +78,10 @@ export const _APITodoList = {
 }
 
 export const APITask = {
+    auth(payload: LoginArgs) {
+        const promise = instance.post<BaseResponse<{ userId: number, token: string }>>(`/auth/login`, payload)
+        return promise
+    },
     me() {
         const promise = instance.get<BaseResponse<meResponse>>(`/auth/me`)
         return promise

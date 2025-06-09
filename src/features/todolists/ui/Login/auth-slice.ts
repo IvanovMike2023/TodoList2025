@@ -15,7 +15,7 @@ export const authSlice = createAppSlice({
         loginTC: create.asyncThunk(
             async (result: LoginArgs, {dispatch, rejectWithValue}) => {
                 try {
-                    const res = await APITodoList.auth(result)
+                    const res = await APITask.auth(result)
                     localStorage.setItem(AUTH_TOKEN, res.data.data.token)
                     return {IsLoggedIn: true}
                 } catch (er) {
