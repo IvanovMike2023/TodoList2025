@@ -12,7 +12,9 @@ export const store = configureStore({
         todolists: todolistsReducer,
         [appSlice.name]: appReducer,
         [authSlice.name]: authReducer,
-    }
+        [APITodoList.reducerPath]: APITodoList.reducer
+    },
+    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(APITodoList.middleware)
 })
 setupListeners(store.dispatch)
 // автоматическое определение типа всего объекта состояния

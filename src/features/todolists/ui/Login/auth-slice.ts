@@ -1,4 +1,4 @@
-import {APITodoList, LoginArgs} from "../../api/APITodoList";
+import {APITask, APITodoList, LoginArgs} from "../../api/APITodoList";
 import {asyncThunkCreator, buildCreateSlice} from "@reduxjs/toolkit";
 import {AUTH_TOKEN} from "../../../../common/constants";
 import {ResultCode} from "../../../../common/enums";
@@ -48,7 +48,7 @@ export const authSlice = createAppSlice({
             async (_, {dispatch, rejectWithValue}) => {
                 dispatch(setAppProgressAC({progress:'loading'}))
                 try {
-                    const res = await APITodoList.me()
+                    const res = await APITask.me()
                     if (res.data.resultCode===ResultCode.Success){
                         dispatch(setAppProgressAC({progress:'success'}))
                         return {IsLoggedIn: true}

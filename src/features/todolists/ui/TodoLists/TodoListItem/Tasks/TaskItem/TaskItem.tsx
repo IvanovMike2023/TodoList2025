@@ -25,6 +25,7 @@ export const TaskItem = ({ task, todolist }: Props) => {
 
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked
+        console.log(newStatusValue)
         dispatch(
             updateTaskTC({
                 todolistId: todolist.id,
@@ -37,16 +38,15 @@ export const TaskItem = ({ task, todolist }: Props) => {
     const changeTaskTitle = (title: string) => {
         dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: { title } }))
     }
-
-    const isTaskCompleted = task.status === 2
+    const isTaskCompleted = task.status
    // const disabled = todolist === "loading"
     return (
         <ListItem sx={getListItemSx(isTaskCompleted)}>
             <div>
-                <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} disabled={true} />
+                <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} disabled={false} />
                 <EditableSpan value={task.title} onChange={changeTaskTitle} disabled={false} />
             </div>
-            <IconButton onClick={deleteTask} disabled={true}>
+            <IconButton onClick={deleteTask} disabled={false}>
                 <DeleteIcon />
             </IconButton>
         </ListItem>

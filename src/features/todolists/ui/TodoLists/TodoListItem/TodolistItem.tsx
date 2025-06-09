@@ -12,7 +12,7 @@ type Props = {
 export const TodolistItem = ({todolist}: Props) => {
     const dispatch = useAppDispatch();
     const createTASK = (title: string) => {
-        dispatch(createTaskTC({title,todolist:todolist.id}))
+        dispatch(createTaskTC({title,todolistId:todolist.id}))
     }
     return <>
       <TodoListTitle todolist={todolist}/>

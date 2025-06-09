@@ -11,19 +11,20 @@ export const FilterButtonst = ({ todolist }: PropsType) => {
     const dispatch = useAppDispatch()
 
     const ButtonHandlerActive = (filter:FilterValuesType) => {
-        dispatch(todolistsSlice.actions.changeFilterTodoListAC({filter, todolistId}));
+        console.log(filter,id)
+        dispatch(todolistsSlice.actions.changeFilterTodoListAC({filter:filter, todolistId:id}));
 
     }
-    const ButtonHandlerCompleted = () => {
-        props.ButtonSetStatus('completed')
+    const ButtonHandlerCompleted = (filter:FilterValuesType) => {
+        dispatch(todolistsSlice.actions.changeFilterTodoListAC({filter:filter, todolistId:id}));
     }
-    const ButtonHandlerAll = () => {
-        props.ButtonSetStatus('all')
+    const ButtonHandlerAll = (filter:FilterValuesType) => {
+        dispatch(todolistsSlice.actions.changeFilterTodoListAC({filter:filter, todolistId:id}));
     }
     return <>
         <ButtonGroup className={s.ButtonWrap} color="secondary" aria-label="Medium-sized button group">
             <Button variant={'outlined'} style={filter==='all'? {backgroundColor: '#38f590'}:{}} color={"inherit"} key="All" onClick={()=>ButtonHandlerAll('All')}>All</Button>
-            <Button style={filter==='active'? {backgroundColor: '#38f590'}:{}} color={"primary"} key="two" onClick={ButtonHandlerActive}>Active</Button>
-            <Button style={filter==='completed'? {backgroundColor: '#38f590'}:{}} color={"secondary"} key="three" onClick={ButtonHandlerCompleted}>Completed</Button>
+            <Button style={filter==='active'? {backgroundColor: '#38f590'}:{}} color={"primary"} key="two" onClick={()=>ButtonHandlerActive('active')}>Active</Button>
+            <Button style={filter==='completed'? {backgroundColor: '#38f590'}:{}} color={"secondary"} key="three" onClick={()=>ButtonHandlerCompleted('completed')}>Completed</Button>
         </ButtonGroup></>
 }

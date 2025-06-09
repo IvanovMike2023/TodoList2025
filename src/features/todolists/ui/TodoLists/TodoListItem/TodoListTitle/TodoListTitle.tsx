@@ -11,7 +11,6 @@ type  Props={
 export  const TodoListTitle=({todolist}: Props)=>{
     const dispatch = useAppDispatch();
     const { id, title, entityStatus } = todolist
-    console.log(title)
     const changeTitleTodolist = (title: string) => {
         dispatch(changeTodoListTC(title,id))
     }
