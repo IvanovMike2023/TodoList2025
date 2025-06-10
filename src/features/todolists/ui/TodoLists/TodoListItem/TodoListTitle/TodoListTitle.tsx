@@ -4,21 +4,25 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {changeTodoListTC, deleteTodoListTC, DomainTodolist} from "@/common/components/todoList-slice";
 import {useAppDispatch} from "@/app/hooks/useAppDispatch";
 import IconButton from "@mui/material/IconButton"
+import {useChangeTodoListMutation, useDeleteTodoListMutation} from "@/features/todolists/api/APITodoList";
 
-type  Props={
+type  Props = {
     todolist: DomainTodolist
 }
-export  const TodoListTitle=({todolist}: Props)=>{
-    const dispatch = useAppDispatch();
-    const { id, title, entityStatus } = todolist
-    const changeTitleTodolist = (title: string) => {
-        dispatch(changeTodoListTC(title,id))
+export const TodoListTitle = ({todolist}: Props) => {
+    const {id, title, entityStatus} = todolist
+    const [deleteTitleTodolist] = useDeleteTodoListMutation()
+    const [changeTitleTodolist] = useChangeTodoListMutation()
+    const changeTitleTodolistHandler = (title: string) => {
+        console.log(id)
+        changeTitleTodolist({title: title, todolistId: id})
     }
-    const deleteTitleTodolist = () => {
-        dispatch(deleteTodoListTC(id))    }
+    const deleteTitleTodolistHandler = () => {
+        deleteTitleTodolist(id)
+    }
 
-    return   <div className={s.TitleTodoList}>
-        <Editablespan title={title} changeTaskTitle={changeTitleTodolist}/>
-        <IconButton color="primary"><DeleteIcon onClick={deleteTitleTodolist} color={'action'}/></IconButton>
+    return <div className={s.TitleTodoList}>
+        <Editablespan title={title} changeTaskTitle={changeTitleTodolistHandler}/>
+        <IconButton color="primary"><DeleteIcon onClick={deleteTitleTodolistHandler} color={'action'}/></IconButton>
     </div>
 }

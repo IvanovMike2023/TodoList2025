@@ -34,6 +34,19 @@ export const APITodoList = createApi({
                 method:"POST",
                 body:{title}
             })
+        }) ,
+        deleteTodoList: build.mutation<BaseResponse,string>({
+            query: (todolistId)=>({
+                url:`/todo-lists/${todolistId}`,
+                method:"DELETE"
+            })
+        }),
+        changeTodoList: build.mutation<BaseResponse, { title:string, todolistId:string }>({
+            query: ({title, todolistId})=>({
+                url:`/todo-lists/${todolistId}`,
+                method:"PUT",
+                body: {title}
+            })//title: string, todolistId: string
         })
     }),
 })
@@ -44,7 +57,7 @@ export const APITodoList = createApi({
 // }
 // `createApi` создает объект `API`, который содержит все эндпоинты в виде хуков,
 // определенные в свойстве `endpoints`
-export const {useGetTodolistsQuery,useLazyTodolistsQuery,useCreatenNewTodoListMutation} = APITodoList
+export const {useGetTodolistsQuery,useLazyTodolistsQuery,useCreatenNewTodoListMutation,useDeleteTodoListMutation,useChangeTodoListMutation} = APITodoList
 
 export const _APITodoList = {
     auth(payload: LoginArgs) {
