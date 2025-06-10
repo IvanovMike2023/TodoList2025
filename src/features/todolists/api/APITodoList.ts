@@ -13,6 +13,7 @@ export type LoginArgs = {
 
 
 export const APITodoList = createApi({
+    tagTypes: ['TodoLists'],
     reducerPath: 'APITodoList',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_BASE_URL,
@@ -25,7 +26,8 @@ export const APITodoList = createApi({
         getTodolists: build.query<DomainTodolist[], void>({
             query: () => "todo-lists",
             transformResponse: (todolists: TodolistsType[]): DomainTodolist[] =>
-                todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'}))
+                todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'})),
+            providesTags: ['TodoLists']
 
         }),
         createnNewTodoList: build.mutation<BaseResponse<{item:TodolistsType}>,string>({
@@ -33,20 +35,23 @@ export const APITodoList = createApi({
                 url:"/todo-lists",
                 method:"POST",
                 body:{title}
-            })
+            }),
+            invalidatesTags: ['TodoLists']
         }) ,
         deleteTodoList: build.mutation<BaseResponse,string>({
             query: (todolistId)=>({
                 url:`/todo-lists/${todolistId}`,
                 method:"DELETE"
-            })
+            }),
+            invalidatesTags: ['TodoLists']
         }),
         changeTodoList: build.mutation<BaseResponse, { title:string, todolistId:string }>({
             query: ({title, todolistId})=>({
                 url:`/todo-lists/${todolistId}`,
                 method:"PUT",
                 body: {title}
-            })//title: string, todolistId: string
+            }),
+            invalidatesTags: ['TodoLists']
         })
     }),
 })
