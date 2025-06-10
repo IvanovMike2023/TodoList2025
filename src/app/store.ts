@@ -1,20 +1,20 @@
-import {tasksReducer} from "../common/components/task-slice";
+import {tasksReducer, tasksSlice} from "../common/components/task-slice";
 import {todolistsReducer} from "../common/components/todoList-slice";
 import {configureStore} from "@reduxjs/toolkit";
 import {appReducer, appSlice} from "./app-slice";
 import {authReducer, authSlice} from "../features/todolists/ui/Login/auth-slice";
-import {_APITodoList, APITodoList} from "@/features/todolists/api/APITodoList";
 import {setupListeners} from "@reduxjs/toolkit/query";
+import {baseApi} from "@/app/baseApi";
 // создание store
 export const store = configureStore({
     reducer: {
-        tasks: tasksReducer,
+        [tasksSlice.name]: tasksReducer,
         todolists: todolistsReducer,
         [appSlice.name]: appReducer,
         [authSlice.name]: authReducer,
-        [APITodoList.reducerPath]: APITodoList.reducer
+        [baseApi.reducerPath]: baseApi.reducer
     },
-    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(APITodoList.middleware)
+    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(baseApi.middleware)
 })
 setupListeners(store.dispatch)
 // автоматическое определение типа всего объекта состояния

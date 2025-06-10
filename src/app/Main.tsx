@@ -9,13 +9,13 @@ import {useCreatenNewTodoListMutation} from "@/features/todolists/api/APITodoLis
 export const Main = () => {
    const [createTodolist]=useCreatenNewTodoListMutation()
     // const dispatch = useAppDispatch()
-    // const createTodolist = (title: string) => {
-    //     dispatch(createTodoListTC(title))
-    // }
+    const createTodolist1 = (title: string) => {
+        createTodolist(title)
+    }
     return (
         <Container fixed>
             <Grid container style={{padding: '20px'}}>
-                <AddItemForm onCreateItem={createTodolist}/>
+                <AddItemForm onCreateItem={createTodolist1}/>
             </Grid>
             <TodoLists/>
         </Container>

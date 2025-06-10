@@ -1,8 +1,6 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-
 import {instance} from "./instance";
-import {AUTH_TOKEN} from "@/common/constants";
 import {DomainTodolist} from "@/common/components/todoList-slice";
+import {baseApi} from "@/app/baseApi";
 
 export type LoginArgs = {
     email: string,
@@ -11,23 +9,13 @@ export type LoginArgs = {
     captcha?: string
 }
 
-
-export const APITodoList = createApi({
-    tagTypes: ['TodoLists'],
-    reducerPath: 'APITodoList',
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_BASE_URL,
-        prepareHeaders: (headers) => {
-            headers.set("API-KEY", import.meta.env.VITE_API_KEY)
-            headers.set("Authorization", `Bearer ${localStorage.getItem(AUTH_TOKEN)}`)
-        },
-    }),
+export const APITodoList =baseApi.injectEndpoints({
     endpoints: (build) => ({
         getTodolists: build.query<DomainTodolist[], void>({
             query: () => "todo-lists",
             transformResponse: (todolists: TodolistsType[]): DomainTodolist[] =>
                 todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'})),
-            providesTags: ['TodoLists']
+            providesTags: ['TodoList']
 
         }),
         createnNewTodoList: build.mutation<BaseResponse<{item:TodolistsType}>,string>({
@@ -36,14 +24,14 @@ export const APITodoList = createApi({
                 method:"POST",
                 body:{title}
             }),
-            invalidatesTags: ['TodoLists']
+            invalidatesTags: ['TodoList']
         }) ,
         deleteTodoList: build.mutation<BaseResponse,string>({
             query: (todolistId)=>({
                 url:`/todo-lists/${todolistId}`,
                 method:"DELETE"
             }),
-            invalidatesTags: ['TodoLists']
+            invalidatesTags: ['TodoList']
         }),
         changeTodoList: build.mutation<BaseResponse, { title:string, todolistId:string }>({
             query: ({title, todolistId})=>({
@@ -51,7 +39,7 @@ export const APITodoList = createApi({
                 method:"PUT",
                 body: {title}
             }),
-            invalidatesTags: ['TodoLists']
+            invalidatesTags: ['TodoList']
         })
     }),
 })
