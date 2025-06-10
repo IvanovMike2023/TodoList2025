@@ -1,15 +1,14 @@
-import  {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import s from '../app.module.css'
 import {Header} from "../common/components/Header/Header";
 import {Box, CircularProgress, CssBaseline, ThemeProvider} from "@mui/material";
 import {getTheme} from "../common/theme/theme";
 import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
-import {selectProgressMode, selectThemeMode} from "./hooks/app-selectord";
+import {selectThemeMode} from "./hooks/app-selectord";
 import {Routing} from "../common/routing/Routing";
-import {meTC, setIsLoggedInAC} from "../features/todolists/ui/Login/auth-slice";
+import {setIsLoggedInAC} from "../features/todolists/ui/Login/auth-slice";
 import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
-import LineProgress from "../common/utils/LineProgress/LineProgress";
 import {useMeQuery} from "@/features/todolists/api/APITodoList";
 
 export function App() {
