@@ -1,20 +1,19 @@
 import s from "../Header/header.module.css";
-import React from "react";
 import {Switch} from "@mui/material";
 import {useAppSelector} from "../../../app/hooks/useAppSelector";
 import {selectThemeMode} from "../../../app/hooks/app-selectord";
 import {useAppDispatch} from "../../../app/hooks/useAppDispatch";
 import {logoutTC, selectIsLoggedIn} from "../../../features/todolists/ui/Login/auth-slice";
+import {appSlice} from "@/app/app-slice";
 
-type PropsType={
-    changeTheme:()=>void
-}
 
-export const Header =(props:PropsType)=>{
+export const Header =()=>{
 const dispatch=useAppDispatch()
     const themeMode = useAppSelector(selectThemeMode)
     const HandlechangeTheme=()=>{
-        props.changeTheme()
+        dispatch(appSlice.actions.changeThemeModeAC({
+            themeMode: themeMode === 'light' ? 'dark' : 'light'
+        }))
     }
     const UnLogin=()=>{
         dispatch( logoutTC())

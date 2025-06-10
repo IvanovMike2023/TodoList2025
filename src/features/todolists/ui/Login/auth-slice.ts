@@ -44,33 +44,36 @@ export const authSlice = createAppSlice({
                 }
             }
         ),
-        meTC: create.asyncThunk(
-            async (_, {dispatch, rejectWithValue}) => {
-                dispatch(setAppProgressAC({progress:'loading'}))
-                try {
-                    const res = await APITask.me()
-                    if (res.data.resultCode===ResultCode.Success){
-                        dispatch(setAppProgressAC({progress:'success'}))
-                        return {IsLoggedIn: true}
-                    }else {
-                        handleError(res.data,dispatch)
-                        return {IsLoggedIn: false}
-                    }
-                } catch (er:any) {
-                    handleNetworkError(er,dispatch)
-                    return rejectWithValue(null)
-                }
-            },
-            {
-                fulfilled: (state, action) => {
-                    state.IsLoggedIn = action.payload.IsLoggedIn
-                }
-            }
-        ),
+        // meTC: create.asyncThunk(
+        //     async (_, {dispatch, rejectWithValue}) => {
+        //         dispatch(setAppProgressAC({progress:'loading'}))
+        //         try {
+        //             const res = await APITask.me()
+        //             if (res.data.resultCode===ResultCode.Success){
+        //                 dispatch(setAppProgressAC({progress:'success'}))
+        //                 return {IsLoggedIn: true}
+        //             }else {
+        //                 handleError(res.data,dispatch)
+        //                 return {IsLoggedIn: false}
+        //             }
+        //         } catch (er:any) {
+        //             handleNetworkError(er,dispatch)
+        //             return rejectWithValue(null)
+        //         }
+        //     },
+        //     {
+        //         fulfilled: (state, action) => {
+        //             state.IsLoggedIn = action.payload.IsLoggedIn
+        //         }
+        //     }
+        // ),
+        setIsLoggedInAC:create.reducer<{IsLoggedIn:boolean}>((state,action)=>{
+            state.IsLoggedIn = action.payload.IsLoggedIn
+        })
     }),
 })
 export const authReducer = authSlice.reducer
-export const {loginTC, logoutTC, meTC} = authSlice.actions
+export const {loginTC, logoutTC, meTC,setIsLoggedInAC} = authSlice.actions
 export const {selectIsLoggedIn} = authSlice.selectors
 
 

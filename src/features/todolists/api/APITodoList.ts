@@ -16,7 +16,6 @@ export const APITodoList =baseApi.injectEndpoints({
             transformResponse: (todolists: TodolistsType[]): DomainTodolist[] =>
                 todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'})),
             providesTags: ['TodoList']
-
         }),
         createnNewTodoList: build.mutation<BaseResponse<{item:TodolistsType}>,string>({
             query: (title)=>({
@@ -44,44 +43,50 @@ export const APITodoList =baseApi.injectEndpoints({
     }),
 })
 
-// me() {
-//     const promise = instance.get<BaseResponse<meResponse>>(`/auth/me`)
-//     return promise
-// }
-// `createApi` создает объект `API`, который содержит все эндпоинты в виде хуков,
-// определенные в свойстве `endpoints`
 export const {useGetTodolistsQuery,useLazyTodolistsQuery,useCreatenNewTodoListMutation,useDeleteTodoListMutation,useChangeTodoListMutation} = APITodoList
 
-export const _APITodoList = {
-    auth(payload: LoginArgs) {
-        const promise = instance.post<BaseResponse<{ userId: number, token: string }>>(`/auth/login`, payload)
-        return promise
-    },
-    logout() {
-        const promise = instance.delete<BaseResponse>(`/auth/login`)
-        return promise
-    },
-    getTodoList() {
-        const promise = instance.get<GetTodoListResponse[]>(`/todo-lists`)
-        return promise
-    },
-    deleteTodoList(todolistId: string) {
-        const promise = instance.delete(`/todo-lists/${todolistId}`)
-        return promise
-    },
-    createnNewTodoList(title: string) {
-        const promise = instance.post(`/todo-lists`, {title: title})
-        return promise
-    },
-    changeTodoList(title: string, todolistId: string) {
-        const promise = instance.put(`/todo-lists/${todolistId}`, {title: title})
-        return promise
-    },
-    me() {
-        const promise = instance.get<BaseResponse<meResponse>>(`/auth/me`)
-        return promise
-    }
-}
+// export const AuthApi =baseApi.injectEndpoints( {
+//     endpoints: (build) => ({
+//         me: build.query<BaseResponse<meResponse>, void>({
+//             query: () => "/auth/me",
+//             // transformResponse: (todolists: TodolistsType[]): DomainTodolist[] =>
+//             //     todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'})),
+//             // providesTags: ['TodoList']
+//         }),
+//     }),
+//
+//     auth(payload: LoginArgs) {
+//         const promise = instance.post<BaseResponse<{ userId: number, token: string }>>(`/auth/login`, payload)
+//         return promise
+//     },
+//     logout() {
+//         const promise = instance.delete<BaseResponse>(`/auth/login`)
+//         return promise
+//     }
+//
+// })
+export const authApi = baseApi.injectEndpoints({
+    endpoints: (build) => ({
+        me: build.query<BaseResponse<{ id: number; email: string; login: string }>, void>({
+            query: () => "auth/me",
+        }),
+        login: build.mutation<BaseResponse<{ userId: number; token: string }>, LoginArgs>({
+            query: (body) => ({
+                url: "auth/login",
+                method: "POST",
+                body,
+            }),
+        }),
+        logout: build.mutation<BaseResponse, void>({
+            query: () => ({
+                url: "auth/login",
+                method: "DELETE",
+            }),
+        }),
+    }),
+})
+
+export const { useMeQuery, useLoginMutation, useLogoutMutation } = authApi
 
 export const APITask = {
     auth(payload: LoginArgs) {
