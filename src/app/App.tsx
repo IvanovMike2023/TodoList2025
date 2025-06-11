@@ -7,13 +7,12 @@ import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {selectThemeMode} from "./hooks/app-selectord";
 import {Routing} from "../common/routing/Routing";
-import {setIsLoggedInAC} from "../features/todolists/ui/Login/auth-slice";
 import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
 import {useMeQuery} from "@/features/todolists/api/APITodoList";
+import {setIsLoggedInAC} from "@/app/app-slice";
 
 export function App() {
     const themeMode = useAppSelector(selectThemeMode)
-    //const progress = useAppSelector(selectProgressMode)
     const [isInit, setisInit] = useState(false)
     const dispatch = useAppDispatch()
     const theme = getTheme(themeMode)
@@ -33,7 +32,7 @@ export function App() {
             <div className={s.AppContainer}>
                 <Header />
                 {/*{progress==='success' ? <></> : <LineProgress />}*/}
-                {isInit ? <Routing/> : <Box className={s.progress}><CircularProgress color={'info'} size={100}/></Box>}
+                {isInit ? <Routing/> : <Box className={s.status}><CircularProgress color={'info'} size={100}/></Box>}
             </div>
             <ErrorSnackBar/>
         </ThemeProvider>

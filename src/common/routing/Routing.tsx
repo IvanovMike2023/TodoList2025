@@ -4,13 +4,14 @@ import {PageNotFound} from "../components/PageNotFound/PageNotFound";
 import {Login} from "../../features/todolists/ui/Login/Login";
 import {ProtectedRoute} from "../components/ProtectedRoute/ProtectedRoute";
 import {useAppSelector} from "../../app/hooks/useAppSelector";
+import {selectIsLoggedIn} from "@/app/app-slice";
 export const Path={
     Main:'/',
     Login:'/login',
     NotFound: '*'
 }as const
 export const Routing = () => {
-    const IsLoggedIn = useAppSelector(state=>state.auth.IsLoggedIn)
+    const IsLoggedIn = useAppSelector(selectIsLoggedIn)
     return <Routes>
         <Route element={<ProtectedRoute isLogin={IsLoggedIn} />}>
         <Route path={Path.Main} element={<Main/>}/>

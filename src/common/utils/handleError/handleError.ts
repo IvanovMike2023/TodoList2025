@@ -6,5 +6,5 @@ export const handleError=<T>(data:BaseResponse<T>,dispatch:Dispatch)=>{
 if(data.messages.length){
     dispatch(setAppErrorAC({error:data.messages[0]}))
 }else dispatch(setAppErrorAC({error:'some Error'}))
-    dispatch(setAppProgressAC({progress:'success'}))
+    dispatch(setAppProgressAC({status:'success'}))
 }

@@ -4,10 +4,13 @@ import {Checkbox, FormControl, FormControlLabel, FormGroup, Grid, TextField} fro
 import {Controller, useForm} from 'react-hook-form';
 import s from './Login.module.css';
 import {useAppSelector} from "../../../../app/hooks/useAppSelector";
-import {loginTC, selectIsLoggedIn} from "./auth-slice";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {Path} from "../../../../common/routing/Routing";
 import {useNavigate} from "react-router";
+import {useLoginMutation} from "@/features/todolists/api/APITodoList";
+import {selectIsLoggedIn, setIsLoggedInAC} from "@/app/app-slice";
+import {loginTC} from "@/features/todolists/ui/Login/auth-slice";
+import {AUTH_TOKEN} from "@/common/constants";
 
 
 // const providers = [{ id: 'credentials', name: 'Email and Password' }];
@@ -56,8 +59,12 @@ export const Login = () => {
         control,
         formState: { errors },
     } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
+    const [login]=useLoginMutation()
     const onsubmit=(data:Inputs)=>{
-        dispatch(loginTC(data))
+        login(data).then((res)=>{
+            dispatch( setIsLoggedInAC({IsLoggedIn:true}))
+            localStorage.setItem(AUTH_TOKEN, res.data.data?.token)
+        })
         reset()
     }
 useEffect(()=>{

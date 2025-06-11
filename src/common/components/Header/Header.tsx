@@ -1,14 +1,15 @@
 import s from "../Header/header.module.css";
 import {Switch} from "@mui/material";
 import {useAppSelector} from "../../../app/hooks/useAppSelector";
-import {selectThemeMode} from "../../../app/hooks/app-selectord";
 import {useAppDispatch} from "../../../app/hooks/useAppDispatch";
-import {logoutTC, selectIsLoggedIn} from "../../../features/todolists/ui/Login/auth-slice";
-import {appSlice} from "@/app/app-slice";
+import {appSlice, selectIsLoggedIn, selectThemeMode, setIsLoggedInAC} from "@/app/app-slice";
+import {useLogoutMutation} from "@/features/todolists/api/APITodoList";
+import {AUTH_TOKEN} from "@/common/constants";
 
 
 export const Header =()=>{
 const dispatch=useAppDispatch()
+    const [logout]=useLogoutMutation()
     const themeMode = useAppSelector(selectThemeMode)
     const HandlechangeTheme=()=>{
         dispatch(appSlice.actions.changeThemeModeAC({
@@ -16,7 +17,9 @@ const dispatch=useAppDispatch()
         }))
     }
     const UnLogin=()=>{
-        dispatch( logoutTC())
+    logout()
+    dispatch( setIsLoggedInAC({IsLoggedIn:false}))
+        localStorage.removeItem(AUTH_TOKEN)
     }
     const IsLoggedIn = useAppSelector(selectIsLoggedIn)
 
