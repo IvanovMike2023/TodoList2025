@@ -10,8 +10,7 @@ const {data:todolists }=useGetTodolistsQuery()
         {todolists?.map((todolist) => {
             return <Grid item key={todolist.id}>
                 <Paper style={{padding: '10px'}}>
-                    <TodolistItem todolist={todolist}
-            />
+                    <TodolistItem todolist={todolist}/>
                 </Paper>
                     </Grid>
         })}

@@ -5,19 +5,17 @@ import {useAppSelector} from "@/app/hooks/useAppSelector";
 import {useAppDispatch} from "@/app/hooks/useAppDispatch";
 import {getTaskTC} from "@/common/components/task-slice";
 import {DomainTodolist} from "@/common/components/todoList-slice";
+import {useGetTaskQuery} from "@/features/todolists/api/APITodoList";
 
 type Props = {
     todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: Props) => {
-   // console.log(todolist)
     const { id, filter } = todolist
+    const {data:tasks }=useGetTaskQuery(id)
 
-    const tasks = useAppSelector((state)=>state.tasks )
-    const dispatch = useAppDispatch()
-
-    const todolistTasks = tasks[id]
+    const todolistTasks = tasks?.items
     let filteredTasks = todolistTasks
     if (filter === "active") {
         filteredTasks = todolistTasks.filter((task) => task.status === 0)
@@ -26,9 +24,6 @@ export const Tasks = ({ todolist }: Props) => {
         filteredTasks = todolistTasks.filter((task) => task.status === 2)
     }
 
-    useEffect(() => {
-        dispatch(getTaskTC(id))
-    }, [])
 
     return (
         <>

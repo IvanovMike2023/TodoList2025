@@ -45,26 +45,6 @@ export const APITodoList =baseApi.injectEndpoints({
 
 export const {useGetTodolistsQuery,useLazyTodolistsQuery,useCreatenNewTodoListMutation,useDeleteTodoListMutation,useChangeTodoListMutation} = APITodoList
 
-// export const AuthApi =baseApi.injectEndpoints( {
-//     endpoints: (build) => ({
-//         me: build.query<BaseResponse<meResponse>, void>({
-//             query: () => "/auth/me",
-//             // transformResponse: (todolists: TodolistsType[]): DomainTodolist[] =>
-//             //     todolists.map((todolist) => ({...todolist, filter: "all", entityStatus: 'idle'})),
-//             // providesTags: ['TodoList']
-//         }),
-//     }),
-//
-//     auth(payload: LoginArgs) {
-//         const promise = instance.post<BaseResponse<{ userId: number, token: string }>>(`/auth/login`, payload)
-//         return promise
-//     },
-//     logout() {
-//         const promise = instance.delete<BaseResponse>(`/auth/login`)
-//         return promise
-//     }
-//
-// })
 export const authApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         me: build.query<BaseResponse<{ id: number; email: string; login: string }>, void>({
@@ -88,36 +68,40 @@ export const authApi = baseApi.injectEndpoints({
 
 export const { useMeQuery, useLoginMutation, useLogoutMutation } = authApi
 
-export const APITask = {
-    auth(payload: LoginArgs) {
-        const promise = instance.post<BaseResponse<{ userId: number, token: string }>>(`/auth/login`, payload)
-        return promise
-    },
-    me() {
-        const promise = instance.get<BaseResponse<meResponse>>(`/auth/me`)
-        return promise
-    },
-    getTask(todolistId: string) {
-        const promise = instance.get(`/todo-lists/${todolistId}/tasks`)
-        return promise
-    },
-    createnNewTask(payload: { title: string, todolistId: string }) {
-        const {todolistId, title} = payload
-        console.log(payload)
-        const promise = instance.post<BaseResponse<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
-        return promise
-    },
-    deleteTask(taskId: string, todolistId: string) {
-        console.log(todolistId)
-        const promise = instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`)
-        return promise
-    },
-    changeTask(payload: { apiModel: UpdateTaskModelType, taskId: string, todolistId: string }) {
-        const {apiModel, taskId, todolistId} = payload
-        const promise = instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, apiModel)
-        return promise
-    }
-}
+export const ApiTask = baseApi.injectEndpoints({
+    endpoints: (build) => ({
+        getTask: build.query<GetTasksResponse, string>({
+            query: (todolistId) => `/todo-lists/${todolistId}/tasks`,
+            providesTags: ['Task'],
+        }),
+        createnNewTask: build.mutation<BaseResponse<{ item: TaskType }>,{ title: string, todolistId: string }>({
+            query: ({todolistId,title}) => ({
+                url: `/todo-lists/${todolistId}/tasks`,
+                method: "POST",
+                body: {title},
+            }),
+            invalidatesTags: ['Task']
+        }),
+        deleteTask: build.mutation<BaseResponse<{ item: TaskType }>,{ taskId: string, todolistId: string }>({
+            query: ({todolistId,taskId}) => ({
+                url: `/todo-lists/${todolistId}/tasks/${taskId}`,
+                method: "DELETE",
+
+            }),
+            invalidatesTags: ['Task']
+        }),
+        updateTask: build.mutation<BaseResponse<{ item: TaskType }>,{ model: UpdateTaskModelType, taskId: string, todolistId: string }>({
+            query: ({todolistId,taskId,model}) => ({
+                url: `/todo-lists/${todolistId}/tasks/${taskId}`,
+                method: "PUT",
+                body: model
+            }),
+            invalidatesTags: ['Task']
+        }),
+    }),
+})
+
+export const { useGetTaskQuery,useCreatenNewTaskMutation,useDeleteTaskMutation,useUpdateTaskMutation  } = ApiTask
 
 ///types
 export enum TaskStatuses {
@@ -133,6 +117,11 @@ export enum TaskPriorities {
     Hi = 2,
     Urgently = 3,
     Later = 4,
+}
+export type GetTasksResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
 }
 
 export type UpdateTaskModelType = {

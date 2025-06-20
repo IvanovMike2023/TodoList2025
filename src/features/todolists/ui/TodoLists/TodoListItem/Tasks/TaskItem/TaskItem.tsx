@@ -6,7 +6,12 @@ import ListItem from "@mui/material/ListItem"
 import type { ChangeEvent } from "react"
 import { getListItemSx } from "./TaskItem.styles"
 import {DomainTodolist} from "@/common/components/todoList-slice";
-import {TasksState} from "@/features/todolists/api/APITodoList";
+import {
+    TasksState,
+    UpdateTaskModelType,
+    useDeleteTaskMutation,
+    useUpdateTaskMutation
+} from "@/features/todolists/api/APITodoList";
 import {useAppDispatch} from "@/app/hooks/useAppDispatch";
 import {deleteTaskTC, updateTaskTC} from "@/common/components/task-slice";
 import {EditableSpan} from "@/common/components/EditableSpan/EditableSpan";
@@ -17,36 +22,47 @@ type Props = {
 }
 
 export const TaskItem = ({ task, todolist }: Props) => {
-    const dispatch = useAppDispatch()
-
-    const deleteTask = () => {
-        dispatch(deleteTaskTC({ todolistId: todolist.id, taskId: task.id }))
+const [deleteTask]=useDeleteTaskMutation()
+    const [updateTask]=useUpdateTaskMutation()
+    const deleteTaskHandler = () => {
+        deleteTask({ todolistId: todolist.id, taskId: task.id })
     }
 
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        const newStatusValue = e.currentTarget.checked
-        console.log(newStatusValue)
-        dispatch(
-            updateTaskTC({
+        const model: UpdateTaskModelType = {
+            status:e.currentTarget.checked,
+            title:task.title,
+            deadline: task.deadline,
+            description: task.description,
+            priority: task.priority,
+            startDate: task.startDate
+        }
+            updateTask({
                 todolistId: todolist.id,
                 taskId: task.id,
-                domainModel: { status: newStatusValue  },
-            }),
+                model,
+            }
         )
     }
-
     const changeTaskTitle = (title: string) => {
-        dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: { title } }))
+        const model: UpdateTaskModelType = {
+            status:task.status,
+            title,
+            deadline: task.deadline,
+            description: task.description,
+            priority: task.priority,
+            startDate: task.startDate
+        }
+        updateTask({ todolistId: todolist.id, taskId: task.id, model })
     }
     const isTaskCompleted = task.status
-   // const disabled = todolist === "loading"
     return (
         <ListItem sx={getListItemSx(isTaskCompleted)}>
             <div>
                 <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} disabled={false} />
                 <EditableSpan value={task.title} onChange={changeTaskTitle} disabled={false} />
             </div>
-            <IconButton onClick={deleteTask} disabled={false}>
+            <IconButton onClick={deleteTaskHandler} disabled={false}>
                 <DeleteIcon />
             </IconButton>
         </ListItem>

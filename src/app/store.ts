@@ -8,8 +8,7 @@ import {baseApi} from "@/app/baseApi";
 // создание store
 export const store = configureStore({
     reducer: {
-        [tasksSlice.name]: tasksReducer,
-        todolists: todolistsReducer,
+         todolists: todolistsReducer,
         [appSlice.name]: appReducer,
         [baseApi.reducerPath]: baseApi.reducer
     },
