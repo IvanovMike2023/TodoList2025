@@ -1,8 +1,6 @@
-import {tasksReducer, tasksSlice} from "../common/components/task-slice";
 import {todolistsReducer} from "../common/components/todoList-slice";
 import {configureStore} from "@reduxjs/toolkit";
 import {appReducer, appSlice} from "./app-slice";
-import {authReducer, authSlice} from "../features/todolists/ui/Login/auth-slice";
 import {setupListeners} from "@reduxjs/toolkit/query";
 import {baseApi} from "@/app/baseApi";
 // создание store

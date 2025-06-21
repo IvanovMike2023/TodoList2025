@@ -1,9 +1,22 @@
 import {TodolistItem} from "./TodoListItem/TodolistItem";
-import {buttonClasses, Grid, Paper} from "@mui/material";
-import {useGetTodolistsQuery, useLazyTodolistsQuery} from "@/features/todolists/api/APITodoList";
+import {Box, Grid, Paper} from "@mui/material";
+import {useGetTodolistsQuery} from "@/features/todolists/api/APITodoList";
+import {TodolistSkeleton} from "@/features/todolists/ui/TodoLists/TodoListSkeleton/TodoListSkeleton";
+import {containerSx} from "@/common/styles";
 
 export const TodoLists = () => {
-const {data:todolists }=useGetTodolistsQuery()
+const {data:todolists,isLoading }=useGetTodolistsQuery()
+    if (isLoading) {
+        return (
+            <Box sx={containerSx} style={{ gap: "32px" }}>
+                {Array(3)
+                    .fill(null)
+                    .map((_, id) => (
+                        <TodolistSkeleton key={id} />
+                    ))}
+            </Box>
+        )
+    }
     return <>
         <Grid container spacing={3}>
 
