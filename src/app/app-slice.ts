@@ -1,4 +1,5 @@
 import {createSlice, isFulfilled, isPending, isRejected} from "@reduxjs/toolkit";
+import {ApiTask, APITodoList} from "@/features/todolists/api/APITodoList";
 
 export type ThemeMode = 'dark' | 'light'
 export type ProgresType = 'success' | 'loading' | 'failed'
@@ -19,7 +20,12 @@ export const appSlice = createSlice({
     extraReducers: (bilder) => {
         bilder
             .addMatcher(isPending,
-                (state) => {
+                (state, action) => {
+                    if (APITodoList.endpoints.getTodolists.matchPending(action) ||
+                        ApiTask.endpoints.getTask.matchPending(action)
+                    ) {
+                        return
+                    }
                     state.status = 'loading'
                 })
             .addMatcher(isFulfilled,

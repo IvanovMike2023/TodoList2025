@@ -1,4 +1,3 @@
-import {instance} from "./instance";
 import {DomainTodolist} from "@/common/components/todoList-slice";
 import {baseApi} from "@/app/baseApi";
 
