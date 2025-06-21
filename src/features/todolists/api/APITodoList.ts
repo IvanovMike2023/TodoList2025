@@ -70,7 +70,7 @@ export const { useMeQuery, useLoginMutation, useLogoutMutation } = authApi
 
 export const ApiTask = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        getTask: build.query<GetTasksResponse, string>({
+        getTask: build.query<GetTasksResponse, void>({
             query: (todolistId) => `/todo-lists/${todolistId}/tasks`,
             providesTags: ['Task'],
         }),
@@ -149,17 +149,8 @@ export type TaskType = {
 export type TasksState = {
     [key: string]: TaskType[]
 }
-export type ResponseType<D = {}> = {
-    resultCode: number;
-    messages: Array<string>
-    data: D
-}
-type GetTodoListResponse = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
+
+
 export type TodolistsType = {
     id: string,
     title: string,
@@ -169,11 +160,6 @@ export type TodolistsType = {
 export type FieldError = {
     error: string
     field: string
-}
-type meResponse = {
-    id: number
-    email: string
-    login: string
 }
 export type BaseResponse<T = {}> = {
     data: T

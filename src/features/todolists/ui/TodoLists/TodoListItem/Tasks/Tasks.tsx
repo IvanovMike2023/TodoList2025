@@ -14,7 +14,6 @@ type Props = {
 export const Tasks = ({ todolist }: Props) => {
     const { id, filter } = todolist
     const {data:tasks }=useGetTaskQuery(id)
-
     const todolistTasks = tasks?.items
     let filteredTasks = todolistTasks
     if (filter === "active") {
@@ -23,8 +22,6 @@ export const Tasks = ({ todolist }: Props) => {
     if (filter === "completed") {
         filteredTasks = todolistTasks.filter((task) => task.status === 2)
     }
-
-
     return (
         <>
             {filteredTasks?.length === 0 ? (

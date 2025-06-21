@@ -5,6 +5,7 @@ import {useAppDispatch} from "../../../app/hooks/useAppDispatch";
 import {appSlice, selectIsLoggedIn, selectThemeMode, setIsLoggedInAC} from "@/app/app-slice";
 import {useLogoutMutation} from "@/features/todolists/api/APITodoList";
 import {AUTH_TOKEN} from "@/common/constants";
+import {baseApi} from "@/app/baseApi";
 
 
 export const Header =()=>{
@@ -17,9 +18,15 @@ const dispatch=useAppDispatch()
         }))
     }
     const UnLogin=()=>{
-    logout()
-    dispatch( setIsLoggedInAC({IsLoggedIn:false}))
-        localStorage.removeItem(AUTH_TOKEN)
+    logout().then((res)=>{
+        if(res.data.resultCode===0){
+            dispatch( setIsLoggedInAC({IsLoggedIn:false}))
+            localStorage.removeItem(AUTH_TOKEN)
+        }
+    }).then(()=>{
+        dispatch(baseApi.util.invalidateTags(['TodoList','Task']))
+    })
+
     }
     const IsLoggedIn = useAppSelector(selectIsLoggedIn)
 
