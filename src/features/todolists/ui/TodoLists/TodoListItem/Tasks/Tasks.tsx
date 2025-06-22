@@ -1,13 +1,11 @@
 import {TaskItem} from "./TaskItem/TaskItem"
 import List from "@mui/material/List"
 import {DomainTodolist} from "@/common/components/todoList-slice";
-import {useGetTaskQuery} from "@/features/todolists/api/APITodoList";
 import {containerSx} from "@/common/styles";
 import {Box} from "@mui/material";
 import {TasksSkeleton} from "@/features/todolists/ui/TodoLists/TodoListItem/Tasks/TasksSkeleton/TasksSkeleton";
-import {useAppDispatch} from "@/app/hooks/useAppDispatch";
-import {setAppErrorAC} from "@/app/app-slice";
-import {useEffect} from "react";
+import {TaskStatus} from "@/common/enums";
+import {useGetTaskQuery} from "@/features/todolists/api/taskApi";
 
 type Props = {
     todolist: DomainTodolist
@@ -21,10 +19,10 @@ export const Tasks = ({todolist}: Props) => {
 
     let filteredTasks = todolistTasks
     if (filter === "active") {
-        filteredTasks = todolistTasks.filter((task) => task.status === 0)
+        filteredTasks = todolistTasks.filter((task) => task.status === TaskStatus.New)
     }
     if (filter === "completed") {
-        filteredTasks = todolistTasks.filter((task) => task.status === 1)
+        filteredTasks = todolistTasks.filter((task) => task.status === TaskStatus.InProgress)
     }
 
     if (isLoading) {

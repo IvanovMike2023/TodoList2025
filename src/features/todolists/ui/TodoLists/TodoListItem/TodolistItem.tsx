@@ -3,7 +3,7 @@ import {Tasks} from "./Tasks/Tasks";
 import {FilterButtonst} from "./FilterButtons/FilterButtonst";
 import {DomainTodolist} from "../../../../../common/components/todoList-slice";
 import {TodoListTitle} from "@/features/todolists/ui/TodoLists/TodoListItem/TodoListTitle/TodoListTitle";
-import {useCreatenNewTaskMutation} from "@/features/todolists/api/APITodoList";
+import {useCreatenNewTaskMutation} from "@/features/todolists/api/taskApi";
 
 type Props = {
     todolist: DomainTodolist

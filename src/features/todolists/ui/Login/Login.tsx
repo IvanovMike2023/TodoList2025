@@ -7,10 +7,10 @@ import {useAppSelector} from "../../../../app/hooks/useAppSelector";
 import {useAppDispatch} from "../../../../app/hooks/useAppDispatch";
 import {Path} from "../../../../common/routing/Routing";
 import {useNavigate} from "react-router";
-import {useLoginMutation} from "@/features/todolists/api/APITodoList";
 import {selectIsLoggedIn, setIsLoggedInAC} from "@/app/app-slice";
 import {loginTC} from "@/features/todolists/ui/Login/auth-slice";
 import {AUTH_TOKEN} from "@/common/constants";
+import {useLoginMutation} from "@/features/auth/authApi";
 
 
 // const providers = [{ id: 'credentials', name: 'Email and Password' }];

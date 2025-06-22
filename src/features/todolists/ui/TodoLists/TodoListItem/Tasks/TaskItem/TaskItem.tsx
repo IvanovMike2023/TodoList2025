@@ -3,18 +3,13 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import Checkbox from "@mui/material/Checkbox"
 import IconButton from "@mui/material/IconButton"
 import ListItem from "@mui/material/ListItem"
-import type { ChangeEvent } from "react"
-import { getListItemSx } from "./TaskItem.styles"
+import type {ChangeEvent} from "react"
+import {getListItemSx} from "./TaskItem.styles"
 import {DomainTodolist} from "@/common/components/todoList-slice";
-import {
-    TasksState,
-    UpdateTaskModelType,
-    useDeleteTaskMutation,
-    useUpdateTaskMutation
-} from "@/features/todolists/api/APITodoList";
-import {useAppDispatch} from "@/app/hooks/useAppDispatch";
-import {deleteTaskTC, updateTaskTC} from "@/common/components/task-slice";
+
 import {EditableSpan} from "@/common/components/EditableSpan/EditableSpan";
+import {TasksState, UpdateTaskModelType} from "@/features/todolists/api/taskApi.types";
+import {useDeleteTaskMutation, useUpdateTaskMutation} from "@/features/todolists/api/taskApi";
 
 type Props = {
     task: TasksState

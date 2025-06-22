@@ -1,1 +1,0 @@
-export const ResultCode = { Success:0,Fail:1}

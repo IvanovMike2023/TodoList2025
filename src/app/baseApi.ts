@@ -1,8 +1,6 @@
 import {AUTH_TOKEN} from "@/common/constants";
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {useAppDispatch} from "@/app/hooks/useAppDispatch";
-import {setAppErrorAC} from "@/app/app-slice";
-//const dispatch = useAppDispatch()
+import {handleError} from "@/common/utils/handleError/handleError";
 
 export const baseApi = createApi({
     reducerPath: "APITodoList",
@@ -15,15 +13,7 @@ export const baseApi = createApi({
                 headers.set('Authorization', `Bearer ${localStorage.getItem(AUTH_TOKEN)}`)
             },
         })(args, api, extraOptions)
-        if (result.error) {
-            if (result.error.status === 'FETCH_ERROR' || 'PARSING_ERROR') {
-                api.dispatch(setAppErrorAC({error: result.error.error}))
-            }
-            if (result.error.status === 403 ) {
-                api.dispatch(setAppErrorAC({error: '403 Forbidden Error. Check API-KEY'}))
-            }
-        }
-
+        handleError(result,api)
         return result
     },
     endpoints: () => ({}),

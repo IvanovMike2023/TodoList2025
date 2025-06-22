@@ -3,9 +3,9 @@ import {Switch} from "@mui/material";
 import {useAppSelector} from "../../../app/hooks/useAppSelector";
 import {useAppDispatch} from "../../../app/hooks/useAppDispatch";
 import {appSlice, selectIsLoggedIn, selectThemeMode, setIsLoggedInAC} from "@/app/app-slice";
-import {useLogoutMutation} from "@/features/todolists/api/APITodoList";
 import {AUTH_TOKEN} from "@/common/constants";
 import {baseApi} from "@/app/baseApi";
+import {useLogoutMutation} from "@/features/auth/authApi";
 
 
 export const Header =()=>{

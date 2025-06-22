@@ -7,9 +7,9 @@ import {useAppSelector} from "./hooks/useAppSelector";
 import {useAppDispatch} from "./hooks/useAppDispatch";
 import {Routing} from "../common/routing/Routing";
 import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
-import {useMeQuery} from "@/features/todolists/api/APITodoList";
 import {appSlice, selectAppStatus, selectThemeMode, setIsLoggedInAC} from "@/app/app-slice";
 import * as React from "react";
+import {useMeQuery} from "@/features/auth/authApi";
 
 export function App() {
     const themeMode = useAppSelector(selectThemeMode)

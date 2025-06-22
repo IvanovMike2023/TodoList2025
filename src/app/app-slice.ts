@@ -1,5 +1,6 @@
 import {createSlice, isFulfilled, isPending, isRejected} from "@reduxjs/toolkit";
-import {ApiTask, APITodoList} from "@/features/todolists/api/APITodoList";
+import { APITodoList} from "@/features/todolists/api/APITodoList";
+import {ApiTask} from "@/features/todolists/api/taskApi";
 
 export type ThemeMode = 'dark' | 'light'
 export type ProgresType = 'success' | 'loading' | 'failed'
