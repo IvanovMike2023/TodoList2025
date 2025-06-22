@@ -5,6 +5,9 @@ import {useGetTaskQuery} from "@/features/todolists/api/APITodoList";
 import {containerSx} from "@/common/styles";
 import {Box} from "@mui/material";
 import {TasksSkeleton} from "@/features/todolists/ui/TodoLists/TodoListItem/Tasks/TasksSkeleton/TasksSkeleton";
+import {useAppDispatch} from "@/app/hooks/useAppDispatch";
+import {setAppErrorAC} from "@/app/app-slice";
+import {useEffect} from "react";
 
 type Props = {
     todolist: DomainTodolist
@@ -14,12 +17,14 @@ export const Tasks = ({todolist}: Props) => {
     const {id, filter} = todolist
     const {data: tasks, isLoading} = useGetTaskQuery(id)
     const todolistTasks = tasks?.items
+
+
     let filteredTasks = todolistTasks
     if (filter === "active") {
         filteredTasks = todolistTasks.filter((task) => task.status === 0)
     }
     if (filter === "completed") {
-        filteredTasks = todolistTasks.filter((task) => task.status === 2)
+        filteredTasks = todolistTasks.filter((task) => task.status === 1)
     }
 
     if (isLoading) {
