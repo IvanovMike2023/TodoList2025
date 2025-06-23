@@ -14,15 +14,22 @@ import {useDeleteTaskMutation, useUpdateTaskMutation} from "@/features/todolists
 type Props = {
     task: TasksState
     todolist: DomainTodolist
+    totalPages:number
+    page:number
+    setPage:(page:number)=>void
+    lengthItemAr:number
 }
 
-export const TaskItem = ({ task, todolist }: Props) => {
+export const TaskItem = ({ task, todolist,page ,setPage,lengthItemAr}: Props) => {
 const [deleteTask]=useDeleteTaskMutation()
     const [updateTask]=useUpdateTaskMutation()
     const deleteTaskHandler = () => {
-        deleteTask({ todolistId: todolist.id, taskId: task.id })
-    }
+        deleteTask({ todolistId: todolist.id, taskId: task.id }).unwrap().then((res)=>{
+            if(lengthItemAr===1)
+                          setPage(page-1)
 
+        })
+    }
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         const model: UpdateTaskModelType = {
             status:e.currentTarget.checked,
@@ -51,7 +58,7 @@ const [deleteTask]=useDeleteTaskMutation()
         updateTask({ todolistId: todolist.id, taskId: task.id, model })
     }
     const isTaskCompleted = task.status
-    return (
+    return (<>
         <ListItem sx={getListItemSx(isTaskCompleted)}>
             <div>
                 <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} disabled={false} />
@@ -61,5 +68,6 @@ const [deleteTask]=useDeleteTaskMutation()
                 <DeleteIcon />
             </IconButton>
         </ListItem>
+        </>
     )
 }
