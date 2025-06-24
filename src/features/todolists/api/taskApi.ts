@@ -5,7 +5,8 @@ import {BaseResponse} from "@/features/todolists/api/todoListApi.types";
 export const ApiTask = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getTask: build.query<GetTasksResponse, void>({
-            query: (todolistId) => `/todo-lists/${todolistId}/tasks`,
+            query: ({todolistId, count, page}) =>
+                `/todo-lists/${todolistId}/tasks?page=${page}&count=${count}`,
             providesTags: ['Task'],
         }),
         createnNewTask: build.mutation<BaseResponse<{ item: TaskType }>,{ title: string, todolistId: string }>({

@@ -13,19 +13,22 @@ type Props = {
 }
 
 export const Tasks = ({todolist}: Props) => {
-    const {id, filter} = todolist
-    const {data: tasks, isLoading} = useGetTaskQuery(id)
-    const todolistTasks = tasks?.items
     const [page, setPage] = useState(1)
-    const [displayedItems, setdisplayedItems] = useState([])
     const itemsPerPage = 4
-    const totalPages = Math.ceil(todolistTasks?.length / itemsPerPage)
+
+    const {id, filter} = todolist
+    const {data: tasks, isLoading} = useGetTaskQuery({todolistId:id,page:page, count: 4 })
+    const todolistTasks = tasks?.items
+    const [displayedItems, setdisplayedItems] = useState([])
+    const totalPages = Math.ceil(tasks?.totalCount / itemsPerPage)
+
+    console.log(todolistTasks)
     const ButtonHandler = (event, value) => {
         setPage(value)
     }
     useEffect(() => {
         if (todolistTasks != undefined) {
-            setdisplayedItems(todolistTasks.slice((page - 1) * itemsPerPage, page * itemsPerPage));
+            setdisplayedItems(todolistTasks);
         }
     }, [tasks, page])
 
@@ -36,7 +39,6 @@ export const Tasks = ({todolist}: Props) => {
     if (filter === "completed") {
         filteredTasks = displayedItems.filter((task) => task.status === TaskStatus.InProgress)
     }
-    console.log(page)
     if (isLoading) {
         return (
             <Box sx={containerSx} style={{gap: "32px"}}>
