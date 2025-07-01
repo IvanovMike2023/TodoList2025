@@ -23,6 +23,7 @@ type Props = {
     lengthItemAr:number
 }
 
+
 export const TaskItem = ({ task, todolist,page ,setPage,lengthItemAr}: Props) => {
 const [deleteTask]=useDeleteTaskMutation()
     const [updateTask]=useUpdateTaskMutation()
